@@ -8,7 +8,7 @@ const GOOGLE_CLIENT_ID = "736706200424-0kf7ogmosqktuuji45om6vavokt7n5m4.apps.goo
 
 const Skeleton = ({ userId, handleLogin, handleLogout }) => {
   return (
-    <>
+    <span className="Login">
       {userId ? (
         <GoogleLogout
           clientId={GOOGLE_CLIENT_ID}
@@ -24,10 +24,7 @@ const Skeleton = ({ userId, handleLogin, handleLogout }) => {
           onFailure={(err) => console.log(err)}
         />
       )}
-      <h1>Good luck on your project :)</h1>
-      <h2>How to go from this skeleton to our actual app</h2>
-      <a href="http://weblab.to/get-started">Check out this getting started guide</a>
-    </>
+    </span>
   );
 };
 
