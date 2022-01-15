@@ -1,15 +1,15 @@
 .SubmitBar-addButton {
-    width: 150px;
-    font-family: 'Roboto', sans-serif;
-    font-size: 24px;
-    background-color: #ccd5ae;
+  width: 150px;
+  font-family: "Roboto", sans-serif;
+  font-size: 24px;
+  background-color: #ccd5ae;
 }
 
 textarea {
   resize: none;
   border: 2px solid grey;
   width: 1200px;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 24px;
 }
 
