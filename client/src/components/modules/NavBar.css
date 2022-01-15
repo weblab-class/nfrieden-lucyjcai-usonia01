@@ -27,6 +27,7 @@
     padding: var(--m);
     display: flex;
     /* position: relative; */
+    height: 80px;
     justify-content: space-between;
     background-color: rgba(212, 163, 115, 1);
   }

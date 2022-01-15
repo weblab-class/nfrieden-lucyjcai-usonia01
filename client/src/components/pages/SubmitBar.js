@@ -28,7 +28,7 @@ const SubmitBar = () => {
     // };
 
     return (
-        <div>
+        <div className="SubmitBar-container">
             <div className="SubmitBar-sent">
                 {sentences.map((sentences) => (
                     <StorySentence content={sentences} />
