@@ -28,8 +28,9 @@ const GamePage = () => {
               maxLength="50"
             ></textarea>
             <span class="Text-space_count"> {count}/50 (Max Character)</span>
+
+            <SubmitBar />
           </div>
-          <input className="item GamePage-addButton" type="button" value="Add!"></input>
         </div>
       </div>
     </>

@@ -1,3 +1,14 @@
+.SubmitBar-sent {
+  border: 2px solid grey;
+}
+
+.Text-space_count {
+  position: absolute;
+  bottom: -2px;
+  right: 8px;
+  font-size: 13px;
+}
+
 .SubmitBar-addButton {
   width: 150px;
   font-family: "Roboto", sans-serif;
