@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./GamePage.css";
+import SubmitBar from "./SubmitBar.js";
 
 const GamePage = () => {
   const [count, setCount] = useState(0);
@@ -20,6 +21,8 @@ const GamePage = () => {
 
         <div className="Add">
           <div className="my-text">
+            <h1>hi this is the game page</h1>
+            <SubmitBar />
             <textarea
               className="item Text-space"
               onChange={(event) => {
