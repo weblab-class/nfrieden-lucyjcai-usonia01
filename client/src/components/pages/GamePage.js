@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./GamePage.css";
+import SubmitBar from "./SubmitBar";
 
 const GamePage = () => {
   const [count, setCount] = useState(0);
