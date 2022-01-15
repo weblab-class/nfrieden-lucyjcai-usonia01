@@ -7,8 +7,6 @@ const GamePage = () => {
   const CharCount = () => {
     if (document.getElementsByClassName("Text-space").length <= 50) {
       setCount(document.getElementsByClassName("Text-space").length);
-    } else {
-      setCount((prev) => prev);
     }
   };
 
@@ -24,7 +22,9 @@ const GamePage = () => {
           <div className="my-text">
             <textarea
               className="item Text-space"
-              onKeyUp={CharCount}
+              onChange={(event) => {
+                CharCount();
+              }}
               placeholder="Type your sentence..."
             ></textarea>
             <span class="Text-space_count"> {count}/50 (Max Character)</span>
