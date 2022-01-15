@@ -12,7 +12,7 @@ const NavBar = (props) => {
         <a href="/" className="NavBar-link">
           <i class="fas fa-home"></i>
         </a>
-        <a href="/new_story" className="NavBar-link">
+        <a href="/new-story" className="NavBar-link">
           <i class="fas fa-plus-square"></i>
         </a>
 

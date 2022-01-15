@@ -4,9 +4,9 @@ import "./GamePage.css";
 const GamePage = () => {
   const [count, setCount] = useState(0);
 
-  const CharCount = () => {
-    if (document.getElementsByClassName("Text-space").length <= 50) {
-      setCount(document.getElementsByClassName("Text-space").length);
+  const CharCount = (event) => {
+    if (event.target.value.length <= 50) {
+      setCount(event.target.value.length);
     }
   };
 
@@ -16,16 +16,16 @@ const GamePage = () => {
         <textarea
           className="item test"
           placeholder="Your changing story will appear here..."
+          disabled
         ></textarea>
 
         <div className="Add">
           <div className="my-text">
             <textarea
               className="item Text-space"
-              onChange={(event) => {
-                CharCount();
-              }}
+              onChange={CharCount}
               placeholder="Type your sentence..."
+              maxLength="50"
             ></textarea>
             <span class="Text-space_count"> {count}/50 (Max Character)</span>
           </div>
