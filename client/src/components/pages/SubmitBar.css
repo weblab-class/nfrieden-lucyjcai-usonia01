@@ -4,8 +4,8 @@
 
 .Text-space_count {
   position: absolute;
-  bottom: -2px;
-  right: 8px;
+  bottom: -20px;
+  left: 8px;
   font-size: 13px;
 }
 
@@ -25,9 +25,9 @@ textarea {
 }
 
 .SubmitBar-typeBox {
-  position: absolute;
+  position: fixed;
   padding-bottom: 0;
+  bottom: 35px;
   display: flex;
-  align-items: stretch;
-  justify-content: space-around;
+  justify-content: stretch;
 }
