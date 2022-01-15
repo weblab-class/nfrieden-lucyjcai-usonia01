@@ -5,34 +5,34 @@
 /* NavBar-container */
 /* NavBar-link class */
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-}
-
-body {
-  background-color: rgba(254, 250, 224, 1);
-}
-.Web-title {
-  padding: 5px 0px 0px 5px;
-  font: var(--l) serif;
-  font-family: "Ribeye Marrow", cursive;
-  font-weight: 500;
-
-  /* position: absolute; */
-  /* align-items: center; */
-}
-
-.NavBar-container {
-  padding: var(--m);
-  display: flex;
-  /* position: relative; */
-  justify-content: space-between;
-  background-color: rgba(212, 163, 115, 1);
-}
-
-.NavBar-link {
-  font-size: var(--m);
-  padding: 0px 10px 0px 10px;
-  color: var(--white);
-}
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: rgba(254, 250, 224, 1);
+  }
+  .Web-title {
+    padding: 5px 0px 0px 5px;
+    font: var(--l) serif;
+    font-family: "Ribeye Marrow", cursive;
+    font-weight: 500;
+  
+    /* position: absolute; */
+    /* align-items: center; */
+  }
+  
+  .NavBar-container {
+    padding: var(--m);
+    display: flex;
+    /* position: relative; */
+    justify-content: space-between;
+    background-color: rgba(212, 163, 115, 1);
+  }
+  
+  .NavBar-link {
+    font-size: var(--m);
+    padding: 0px 10px 0px 10px;
+    color: var(--white);
+  }

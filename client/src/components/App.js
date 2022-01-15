@@ -3,7 +3,7 @@ import { Router } from "@reach/router";
 import NotFound from "./pages/NotFound.js";
 import Skeleton from "./pages/Skeleton.js";
 import NavBar from "./modules/NavBar.js";
-import Home from "./pages/Homepage";
+import GamePage from "./pages/GamePage.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -45,14 +45,7 @@ const App = () => {
 
       <div>
         <Router>
-          {/* <Skeleton
-            path="/"
-            handleLogin={handleLogin}
-            handleLogout={handleLogout}
-            userId={userId}
-          /> */}
-          {/* <Skeleton path="/" userId={userId} /> */}
-
+          <GamePage path="/" />
           <NotFound default />
         </Router>
       </div>
