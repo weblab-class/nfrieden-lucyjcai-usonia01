@@ -1,0 +1,4 @@
+  .GamePage-container {
+    padding: var(--l);
+    position: relative;
+  }

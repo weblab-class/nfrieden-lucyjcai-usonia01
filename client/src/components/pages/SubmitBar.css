@@ -1,0 +1,22 @@
+.SubmitBar-addButton {
+    width: 150px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    background-color: #ccd5ae;
+}
+
+textarea {
+  resize: none;
+  border: 2px solid grey;
+  width: 1200px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+}
+
+.SubmitBar-typeBox {
+  position: absolute;
+  padding-bottom: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: space-around;
+}
