@@ -1,11 +1,7 @@
 import React from "react";
 
 const StorySentence = (props) => {
- return (
-   <div>
-    <span>{props.content}</span>
-   </div>
- );
+  return <span>{props.content + " "} </span>;
 };
 
 export default StorySentence;

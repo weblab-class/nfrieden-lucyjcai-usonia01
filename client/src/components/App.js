@@ -47,7 +47,7 @@ const App = () => {
 
       <div>
         <Router>
-          <GamePage path="/new-story" />
+          <GamePage path="/new_story" />
           <HomePage path="/" />
           <ActiveStory path="/active-story" />
           <NotFound default />
