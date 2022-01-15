@@ -14,10 +14,6 @@ const GamePage = () => {
   return (
     <>
       <div className="Story-space">
-        <textarea
-          className="item test"
-          placeholder="Your changing story will appear here..."
-        ></textarea>
 
         <div className="Add">
           <div className="my-text">
