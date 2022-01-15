@@ -6,6 +6,7 @@ import "./SubmitBar.css";
 const SubmitBar = () => {
     const [sentences, setSentences] = useState([]);
     const [inputText, setInputText] = useState("");
+    const [count, setCount] = useState(0);
 
     const handleInputText = (event) => {
         const value = event.target.value;
@@ -17,14 +18,30 @@ const SubmitBar = () => {
         setInputText("");
       };
 
+    const CharCount = (event) => {
+        if (event.target.value.length <= 50) {
+            setCount(event.target.value.length);
+        }
+    };
+
     return (
         <div>
-            {sentences.map((sentences) => (
-                <StorySentence content={sentences} />
-            ))}
+            <div className="SubmitBar-sent">
+                {sentences.map((sentences) => (
+                    <StorySentence content={sentences} />
+                ))}
+            </div>
             <div className="SubmitBar-typeBox">
-                <textarea cols="40" rows="3" placeholder="Type your sentence..." value={inputText} onChange={handleInputText}></textarea>
+                <textarea
+                // className="item Text-space"
+                onChange={CharCount}
+                placeholder="Type your sentence..."
+                maxLength="50"
+                value={inputText}
+                onChange={handleInputText}
+                ></textarea>
                 <input className="SubmitBar-addButton" type="button" value="Add!" onClick={addNewSentence}></input>
+                <span class="Text-space_count"> {count}/50 (Max Character)</span>
             </div>
         </div>
     )
