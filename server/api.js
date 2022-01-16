@@ -65,6 +65,7 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
 // change 4: router to getting active story
 router.get("/active_story", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ active: true }).then((story) => {
+    console.log("HEREE")
     if (story.author_ids.includes(req.user._id)) {
       res.send(story);
     } else {
