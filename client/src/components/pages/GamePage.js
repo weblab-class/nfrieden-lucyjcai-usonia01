@@ -10,7 +10,9 @@ const GamePage = () => {
 
   // this needs to be brought in from the back-end 
   // right now its just a hard-coded dictionary
-  const [users, setUsers] = useState([{"color" :"gold", "name": "Nadia Friedman"}, {"color": "blue", "name": "Veer Gadodia"}, {"color": "pink", "name": "Bob"}])
+  const [userDictionary, setUserDictionary] = useState([{"color" :"gold", "name": "Nadia Frieden"}, {"color": "blue", "name": "Lucy Cai"}, {"color": "pink", "name": "Sonia Uwase"}])
+  const [userArray, setUserArray] = useState(["Nadia Frieden", "Lucy Cai", "Sonia Uwase"])
+  const[selectedIndex, setSelectedIndex] = useState(0);
 
   const CharCount = (event) => {
     setInputText(event.target.value);
@@ -26,6 +28,13 @@ const GamePage = () => {
     setCount(0)
     post("/api/new_story", { content: updatedSentences.join(" ") });
   };
+
+  // start of a function to switch which user is bolded (whose "turn" it is)
+  const indicateUser = () => {
+
+    setSelectedIndex(selectedIndex + 1);
+    setSelectedIndex(selectedIndex % 3);
+  }
 
   useEffect(() => {
     let author_id = "61e348b2169bf8320892af1d" // this is mine specifically, it eventually needs to be passed in as a prop? I think
@@ -62,46 +71,53 @@ const GamePage = () => {
     <>
       <div className="Story-space">
         <div style={{flexDirection: "row", display: "flex"}}>
+          {/* This function defines the additive text space*/}
           <div className="item test" style={{ flex: 0.7}}>
             {sentences.length > 0
               ? sentences.map((sentences, index) => <StorySentence key={index} content={sentences} />)
               : "Your changing story will appear here..."}
           </div>
-          
+
+          {/* This function is very messy but it makes the dots on the side */}
           <div style={{flex: 0.3, paddingLeft: 30, paddingRight: 20}}>
             <div style={{fontWeight: "bold", marginBottom: 5, fontSize: "25px"}}>Contributors</div>
-            {users.map((user) => (
+            {userDictionary.map((userDictionary) => (
               <div style={{width: '100%', padding: 10, display: 'flex', alignItems:"center"}}>
               <span style={{ "height": "25px",
                 "width": "25px",
-                "background-color": user.color,
+                "background-color": userDictionary.color,
                 "border-radius": "50%",
                 "display":"inline-block"}}></span>
-              <span style={{fontWeight: 500, marginLeft: 10}}>{user.name}</span>
+              <span style={{fontWeight: 500, marginLeft: 10}}>{userDictionary.name}</span>
             </div>
             ))}
-            
-            
           </div>
         </div>
+        
+        <div style={{flexDirection: "row", display: "flex"}}>
+          <div className="Add">
+            {/* For the text inserter*/}
+            <div className="my-text">
+              <textarea
+                className="item Text-space"
+                onChange={CharCount}
+                placeholder="Type your sentence..."
+                maxLength="50"
+                value={inputText}
+              ></textarea>
+              <span className="Text-space_count"> {count}/50 (Max Character)</span>
+            </div>
 
-        <div className="Add">
-          <div className="my-text">
-            <textarea
-              className="item Text-space"
-              onChange={CharCount}
-              placeholder="Type your sentence..."
-              maxLength="50"
-              value={inputText}
-            ></textarea>
-            <span className="Text-space_count"> {count}/50 (Max Character)</span>
+            {/* For the button*/}
+            <div style={{padding: 24, flex: 0.3}}>
+              <input
+                className="item GamePage-addButton"
+                type="button"
+                value="Add!"
+                onClick={addNewSentence}
+              ></input>
+            </div>
           </div>
-          <input
-            className="item GamePage-addButton"
-            type="button"
-            value="Add!"
-            onClick={addNewSentence}
-          ></input>
         </div>
       </div>
     </>
