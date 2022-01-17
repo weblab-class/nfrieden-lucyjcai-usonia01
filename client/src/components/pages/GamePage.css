@@ -16,7 +16,7 @@
 }
 
 .GamePage-addButton {
-  width: 30vw;
+  width: 15vh;
   height: 15vh;
   font-family: "Roboto", sans-serif;
   background-color: #ccd5ae;
@@ -25,8 +25,9 @@
 
 .my-text {
   position: relative;
-  padding: var(--l);
+  padding: 24px 0px 24px 0px;
 }
+
 .Text-space_count {
   position: absolute;
   bottom: -2px;
@@ -35,8 +36,9 @@
 }
 
 .Text-space {
-  border-radius: 10px;
+  resize: none;
   width: 70vw;
+  border-radius: 10px;
   height: 15vh;
 }
 
