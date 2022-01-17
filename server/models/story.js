@@ -9,4 +9,5 @@ const GameStorySchema = new mongoose.Schema({
   active: Boolean,
 });
 
+// create and export a story model
 module.exports = mongoose.model("story", GameStorySchema);

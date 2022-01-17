@@ -52,7 +52,7 @@ router.get("/stories", (req, res) => {
 
 // Change 3: router for the Newstory
 // TODO: Add the date on which the story was created
-router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
+router.post("/story", auth.ensureLoggedIn, (req, res) => {
   const newStory = new GameStory({
     author_ids: [req.user._id],
     content: req.body.content,
@@ -63,9 +63,9 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
 });
 
 // change 4: router to getting active story
-router.get("/active_story", auth.ensureLoggedIn, (req, res) => {
+router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ active: true }).then((story) => {
-    console.log("HEREE")
+    console.log("HEREE");
     if (story.author_ids.includes(req.user._id)) {
       res.send(story);
     } else {

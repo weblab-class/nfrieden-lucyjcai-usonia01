@@ -8,9 +8,13 @@ const GamePage = () => {
   const [sentences, setSentences] = useState([]);
   const [inputText, setInputText] = useState("");
 
-  // this needs to be brought in from the back-end 
+  // this needs to be brought in from the back-end
   // right now its just a hard-coded dictionary
-  const [users, setUsers] = useState([{"color" :"gold", "name": "Nadia Friedman"}, {"color": "blue", "name": "Veer Gadodia"}, {"color": "pink", "name": "Bob"}])
+  const [users, setUsers] = useState([
+    { color: "gold", name: "Nadia Friedman" },
+    { color: "blue", name: "Veer Gadodia" },
+    { color: "pink", name: "Bob" },
+  ]);
 
   const CharCount = (event) => {
     setInputText(event.target.value);
@@ -19,18 +23,21 @@ const GamePage = () => {
     }
   };
 
+  // MongoDB part; This needs to be edited
+
   const addNewSentence = () => {
     const updatedSentences = [...sentences, inputText];
     setSentences(updatedSentences);
     setInputText("");
-    setCount(0)
+    setCount(0);
     post("/api/new_story", { content: updatedSentences.join(" ") });
   };
 
+  // Nadia's edits
   useEffect(() => {
-    let author_id = "61e348b2169bf8320892af1d" // this is mine specifically, it eventually needs to be passed in as a prop? I think
+    let author_id = "61e348b2169bf8320892af1d"; // this is mine specifically, it eventually needs to be passed in as a prop? I think
 
-    // STEPS: 
+    // STEPS:
     // 1. where you're handing google auth login, you need to save author id in session storage
 
     // 2. in this file, you need to retrieve the author id and use it to make a get
@@ -55,33 +62,38 @@ const GamePage = () => {
       setSentences(stories)
     })
     */
-
-  }, [])
+  }, []);
 
   return (
     <>
       <div className="Story-space">
-        <div style={{flexDirection: "row", display: "flex"}}>
-          <div className="item test" style={{ flex: 0.7}}>
+        <div style={{ flexDirection: "row", display: "flex" }}>
+          <div className="item test" style={{ flex: 0.7 }}>
             {sentences.length > 0
-              ? sentences.map((sentences, index) => <StorySentence key={index} content={sentences} />)
+              ? sentences.map((sentences, index) => (
+                  <StorySentence key={index} content={sentences} />
+                ))
               : "Your changing story will appear here..."}
           </div>
-          
-          <div style={{flex: 0.3, paddingLeft: 30, paddingRight: 20}}>
-            <div style={{fontWeight: "bold", marginBottom: 5, fontSize: "25px"}}>Contributors</div>
-            {users.map((user) => (
-              <div style={{width: '100%', padding: 10, display: 'flex', alignItems:"center"}}>
-              <span style={{ "height": "25px",
-                "width": "25px",
-                "background-color": user.color,
-                "border-radius": "50%",
-                "display":"inline-block"}}></span>
-              <span style={{fontWeight: 500, marginLeft: 10}}>{user.name}</span>
+
+          <div style={{ flex: 0.3, paddingLeft: 30, paddingRight: 20 }}>
+            <div style={{ fontWeight: "bold", marginBottom: 5, fontSize: "25px" }}>
+              Contributors
             </div>
+            {users.map((user) => (
+              <div style={{ width: "100%", padding: 10, display: "flex", alignItems: "center" }}>
+                <span
+                  style={{
+                    height: "25px",
+                    width: "25px",
+                    "background-color": user.color,
+                    "border-radius": "50%",
+                    display: "inline-block",
+                  }}
+                ></span>
+                <span style={{ fontWeight: 500, marginLeft: 10 }}>{user.name}</span>
+              </div>
             ))}
-            
-            
           </div>
         </div>
 
