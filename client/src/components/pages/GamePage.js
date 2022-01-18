@@ -7,12 +7,17 @@ const GamePage = () => {
   const [count, setCount] = useState(0);
   const [sentences, setSentences] = useState([]);
   const [inputText, setInputText] = useState("");
-
+  // const storyId = props.storyId;
+  const [storyId, setStoryId] = useState(undefined);
   // this needs to be brought in from the back-end
   // right now its just a hard-coded dictionary
-  const [userDictionary, setUserDictionary] = useState([{"color" :"gold", "name": "Nadia Frieden"}, {"color": "blue", "name": "Lucy Cai"}, {"color": "pink", "name": "Sonia Uwase"}])
-  const [userArray, setUserArray] = useState(["Nadia Frieden", "Lucy Cai", "Sonia Uwase"])
-  const[selectedIndex, setSelectedIndex] = useState(0);
+
+  // uncomment when done 1
+  const [users, setUsers] = useState([
+    { color: "gold", name: "Nadia Friedman" },
+    { color: "blue", name: "Veer Gadodia" },
+    { color: "pink", name: "Bob" },
+  ]);
 
   const CharCount = (event) => {
     setInputText(event.target.value);
@@ -28,18 +33,19 @@ const GamePage = () => {
     setSentences(updatedSentences);
     setInputText("");
     setCount(0);
-    post("/api/new_story", { content: updatedSentences.join(" ") });
+
+    post("/api/story", { _id: storyId, content: updatedSentences.join(" ") }).then((res) => {
+      // set the state of some frontend state variable to the value of res._id
+      if (!storyId) {
+        // console.log(res._id);
+        setStoryId(res._id);
+      }
+    });
   };
 
-  // start of a function to switch which user is bolded (whose "turn" it is)
-  const indicateUser = () => {
-
-    setSelectedIndex(selectedIndex + 1);
-    setSelectedIndex(selectedIndex % 3);
-  }
-
+  // Nadia's edits
   useEffect(() => {
-    let author_id = "61e348b2169bf8320892af1d"; // this is mine specifically, it eventually needs to be passed in as a prop? I think
+    // let author_id = "61e348b2169bf8320892af1d"; // this is mine specifically, it eventually needs to be passed in as a prop? I think
 
     // STEPS:
     // 1. where you're handing google auth login, you need to save author id in session storage
@@ -54,26 +60,32 @@ const GamePage = () => {
     // The function below does not work how its supposed to, but its a start.
     // It saves stuff after reloading, but duplicates it for an undetermined reason
 
-    /*
-    get("/api/stories").then((res) => {
-      res.map((story) => {
-        let stories = []
-        console.log(story.author_ids, author_id)
-        if (story.author_ids.includes(author_id)){
-          stories.push(story.content)
-        }
-      })
-      setSentences(stories)
-    })
-    */
+    //   get("/api/stories").then((res) => {
+    //     res.map((story) => {
+    //       let stories = [];
+    //       console.log(story.author_ids, author_id);
+    //       if (story.author_ids.includes(author_id)) {
+    //         stories.push(story.content);
+    //       }
+    //     });
+    //     setSentences(stories);
+    //   });
+    // }, []);
+
+    get("/api/CurrentStory").then((response) => {
+      console.log(response);
+      let stories = [];
+      stories.push(response.content);
+
+      setSentences(stories);
+    });
   }, []);
 
   return (
     <>
       <div className="Story-space">
-        <div style={{flexDirection: "row", display: "flex"}}>
-          {/* This function defines the additive text space*/}
-          <div className="item test" style={{ flex: 0.7}}>
+        <div style={{ flexDirection: "row", display: "flex" }}>
+          <div className="item test" style={{ flex: 0.7 }}>
             {sentences.length > 0
               ? sentences.map((sentences, index) => (
                   <StorySentence key={index} content={sentences} />
@@ -81,17 +93,11 @@ const GamePage = () => {
               : "Your changing story will appear here..."}
           </div>
 
-          {/* This function is very messy but it makes the dots on the side */}
-          <div style={{flex: 0.3, paddingLeft: 30, paddingRight: 20}}>
-            <div style={{fontWeight: "bold", marginBottom: 5, fontSize: "25px"}}>Contributors</div>
-            {userDictionary.map((userDictionary) => (
-              <div style={{width: '100%', padding: 10, display: 'flex', alignItems:"center"}}>
-              <span style={{ "height": "25px",
-                "width": "25px",
-                "background-color": userDictionary.color,
-                "border-radius": "50%",
-                "display":"inline-block"}}></span>
-              <span style={{fontWeight: 500, marginLeft: 10}}>{userDictionary.name}</span>
+          {/* uncomment when done */}
+
+          <div style={{ flex: 0.3, paddingLeft: 30, paddingRight: 20 }}>
+            <div style={{ fontWeight: "bold", marginBottom: 5, fontSize: "25px" }}>
+              Contributors
             </div>
             {users.map((user) => (
               <div style={{ width: "100%", padding: 10, display: "flex", alignItems: "center" }}>
@@ -109,31 +115,24 @@ const GamePage = () => {
             ))}
           </div>
         </div>
-        
-        <div style={{flexDirection: "row", display: "flex"}}>
-          <div className="Add">
-            {/* For the text inserter*/}
-            <div className="my-text">
-              <textarea
-                className="item Text-space"
-                onChange={CharCount}
-                placeholder="Type your sentence..."
-                maxLength="50"
-                value={inputText}
-              ></textarea>
-              <span className="Text-space_count"> {count}/50 (Max Character)</span>
-            </div>
 
-            {/* For the button*/}
-            <div style={{padding: 24, flex: 0.3}}>
-              <input
-                className="item GamePage-addButton"
-                type="button"
-                value="Add!"
-                onClick={addNewSentence}
-              ></input>
-            </div>
+        <div className="Add">
+          <div className="my-text">
+            <textarea
+              className="item Text-space"
+              onChange={CharCount}
+              placeholder="Type your sentence..."
+              maxLength="50"
+              value={inputText}
+            ></textarea>
+            <span className="Text-space_count"> {count}/50 (Max Character)</span>
           </div>
+          <input
+            className="item GamePage-addButton"
+            type="button"
+            value="Add!"
+            onClick={addNewSentence}
+          ></input>
         </div>
       </div>
     </>
