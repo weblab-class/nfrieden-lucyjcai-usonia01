@@ -54,9 +54,9 @@ const GamePage = () => {
       let stories = []
       res.map((story) => {
         console.log(story.author_ids, author_id)
-        if (story.author_ids.includes(author_id)){
+        // if (story.author_ids.includes(author_id)){
           stories.push(story.content)
-        }
+        // }
       })
       setSentences(stories)
     })
