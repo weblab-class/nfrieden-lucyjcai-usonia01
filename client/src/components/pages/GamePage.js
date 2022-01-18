@@ -27,16 +27,13 @@ const GamePage = () => {
     setInputText("");
     setCount(0)
     post("/api/new_story", { content: updatedSentences.join(" ") });
+
+    // index for bolding different people's names
+    setSelectedIndex((selectedIndex + 1) % 3);
   };
 
-  // start of a function to switch which user is bolded (whose "turn" it is)
-  const indicateUser = () => {
-
-    setSelectedIndex(selectedIndex + 1);
-    setSelectedIndex(selectedIndex % 3);
-  }
-
   useEffect(() => {
+    let stories = []
     let author_id = "61e348b2169bf8320892af1d" // this is mine specifically, it eventually needs to be passed in as a prop? I think
 
     // STEPS: 
@@ -54,8 +51,8 @@ const GamePage = () => {
 
     /*
     get("/api/stories").then((res) => {
+      let stories = []
       res.map((story) => {
-        let stories = []
         console.log(story.author_ids, author_id)
         if (story.author_ids.includes(author_id)){
           stories.push(story.content)
@@ -81,14 +78,18 @@ const GamePage = () => {
           {/* This function is very messy but it makes the dots on the side */}
           <div style={{flex: 0.3, paddingLeft: 30, paddingRight: 20}}>
             <div style={{fontWeight: "bold", marginBottom: 5, fontSize: "25px"}}>Contributors</div>
-            {userDictionary.map((userDictionary) => (
+            {userDictionary.map((userDictionary, i) => (
               <div style={{width: '100%', padding: 10, display: 'flex', alignItems:"center"}}>
               <span style={{ "height": "25px",
                 "width": "25px",
                 "background-color": userDictionary.color,
                 "border-radius": "50%",
                 "display":"inline-block"}}></span>
-              <span style={{fontWeight: 500, marginLeft: 10}}>{userDictionary.name}</span>
+                
+                {/* function below controls which name is bolded */}
+                {i == selectedIndex ? 
+                <span style={{fontWeight: 700, marginLeft: 10}}>{userDictionary.name}</span> :
+                <span style={{fontWeight: 500, marginLeft: 10}}>{userDictionary.name}</span>}
             </div>
             ))}
           </div>
