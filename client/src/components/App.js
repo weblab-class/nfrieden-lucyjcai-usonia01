@@ -43,7 +43,7 @@ const App = () => {
 
   return (
     <>
-      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />}
+      <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
       <div>
         <Router>
           <GamePage path="/new_story" />
