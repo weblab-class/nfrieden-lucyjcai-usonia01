@@ -16,7 +16,7 @@ const GamePage = () => {
 
   const CharCount = (event) => {
     setInputText(event.target.value);
-    if (event.target.value.length <= 50) {
+    if (event.target.value.length <= 300) {
       setCount(event.target.value.length);
     }
   };
@@ -85,7 +85,7 @@ const GamePage = () => {
                 "background-color": userDictionary.color,
                 "border-radius": "50%",
                 "display":"inline-block"}}></span>
-                
+
                 {/* function below controls which name is bolded */}
                 {i == selectedIndex ? 
                 <span style={{fontWeight: 700, marginLeft: 10}}>{userDictionary.name}</span> :
@@ -103,10 +103,10 @@ const GamePage = () => {
                 className="item Text-space"
                 onChange={CharCount}
                 placeholder="Type your sentence..."
-                maxLength="50"
+                maxLength="300"
                 value={inputText}
               ></textarea>
-              <span className="Text-space_count"> {count}/50 (Max Character)</span>
+              <span className="Text-space_count"> {count}/300 (Max Character)</span>
             </div>
 
             {/* For the button*/}
