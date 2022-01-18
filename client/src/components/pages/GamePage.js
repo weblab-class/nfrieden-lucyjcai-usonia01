@@ -33,7 +33,7 @@ const GamePage = () => {
     setCount(0);
     // post("/api/story", { content: inputText });
 
-    post("/api/story", { _id: storyId, content: updatedSentences.join(" ") }).then((res) => {
+    post("/api/story", { _id: storyId, content: inputText }).then((res) => {
       // set the state of some frontend state variable to the value of res._id
       if (!storyId) {
         // console.log(res._id);
