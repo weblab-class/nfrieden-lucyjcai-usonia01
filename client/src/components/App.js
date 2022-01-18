@@ -6,6 +6,7 @@ import NavBar from "./modules/NavBar.js";
 import GamePage from "./pages/GamePage.js";
 import ActiveStory from "./pages/ActiveStory.js";
 import HomePage from "./pages/Homepage.js";
+import Lobby from "./pages/Lobby.js";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -47,7 +48,8 @@ const App = () => {
 
       <div>
         <Router>
-          <GamePage path="/new_story" />
+          <Lobby path="/new_story" />
+          <GamePage path="/gamepage" />
           <HomePage path="/" />
           <ActiveStory path="/active-story" />
           <NotFound default />

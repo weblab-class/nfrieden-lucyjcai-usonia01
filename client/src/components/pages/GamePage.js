@@ -26,7 +26,7 @@ const GamePage = () => {
     setSentences(updatedSentences);
     setInputText("");
     setCount(0)
-    post("/api/new_story", { content: updatedSentences.join(" ") });
+    post("/api/new_story", { content: inputText });
 
     // index for bolding different people's names
     setSelectedIndex((selectedIndex + 1) % 3);
@@ -34,7 +34,7 @@ const GamePage = () => {
 
   useEffect(() => {
     let stories = []
-    let author_id = "61e348b2169bf8320892af1d" // this is mine specifically, it eventually needs to be passed in as a prop? I think
+    let author_id = "61e24b9a1e9ebaa8e4861821" // this is mine specifically, it eventually needs to be passed in as a prop? I think
 
     // STEPS: 
     // 1. where you're handing google auth login, you need to save author id in session storage
@@ -49,7 +49,7 @@ const GamePage = () => {
     // The function below does not work how its supposed to, but its a start.
     // It saves stuff after reloading, but duplicates it for an undetermined reason
 
-    /*
+
     get("/api/stories").then((res) => {
       let stories = []
       res.map((story) => {
@@ -60,7 +60,7 @@ const GamePage = () => {
       })
       setSentences(stories)
     })
-    */
+
 
   }, [])
 
