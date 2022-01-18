@@ -1,0 +1,19 @@
+.Home-Container {
+  padding: 10px;
+}
+
+.Home-Options {
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  border-radius: 10px;
+
+  background-color: rgba(212, 163, 115, 1);
+  color: #fff;
+  font-size: 25px;
+
+  padding: 20px;
+  margin: 30px;
+  height: 150px;
+  width: 40vw;
+}
