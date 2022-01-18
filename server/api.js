@@ -124,7 +124,17 @@ router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
 // get current story
 
 router.get("/CurrentStory", auth.ensureLoggedIn, (req, res) => {
-  GameStory.findOne({ _id: req.query._id }).then((story) => res.send(story));
+  const input = req.query._id;
+  if (typeof input !== "undefined") {
+    console.log("checking....");
+    console.log(req.query._id);
+    console.log("reached here");
+    GameStory.findById(req.query._id).then((story) => {
+      res.send(story);
+    });
+  } else {
+    return res.send({});
+  }
 });
 
 // change 5: router for changing the existing story
