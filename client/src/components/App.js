@@ -45,7 +45,6 @@ const App = () => {
   return (
     <>
       <NavBar handleLogin={handleLogin} handleLogout={handleLogout} userId={userId} />
-
       <div>
         <Router>
           <Lobby path="/new_story" />

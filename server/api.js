@@ -50,22 +50,69 @@ router.get("/stories", (req, res) => {
   GameStory.find({}).then((stories) => res.send(stories));
 });
 
-// Change 3: router for the Newstory
-// TODO: Add the date on which the story was created
+//g
+
+/// this is supposed to alter tehe story in the database as they are being
+// altered instead of creating new element for some reasons it keeps
+//creating new element
+
+router.post("/story", auth.ensureLoggedIn, (req, res) => {
+  console.log("<<<<<<<");
+  console.log(req.body._id);
+  console.log("<<<<<<<");
+  GameStory.findById(req.body._id).then((story) => {
+    console.log(">>>>");
+    console.log(story);
+    console.log(">>>>");
+    if (story) {
+      console.log("update");
+      if (!story.author_ids.includes(req.user._id)) {
+        story.author_ids = author_ids.push(req.user._id);
+      }
+      story.content = req.body.content;
+      story.save();
+
+      // updateStory.save();
+      // GameStory.findOne({ _id: req.body._id }).then((story) => {
+      //   const authors = story.author_ids;
+      //   if (!authors.includes(req.user_id)) {
+      //     authors.push(req.user._id);
+      //   }
+      //   const content = story.content.concat(" " + req.body.content);
+      //   const toUpdate = {
+      //     author_ids: authors,
+      //     content: content,
+      //   };
+      //   GameStory.replaceOne({ _id: req.body._id }, toUpdate);
+      // });
+    } else {
+      // console.log("create new");
+      const newStory = new GameStory({
+        author_ids: [req.user._id],
+        content: req.body.content,
+        active: true,
+        code: req.body.code,
+      });
+
+      newStory.save().then((story) => res.send(story));
+    }
+  });
+});
+
+//creating new story
+
 router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
-  const newStory = new GameStory({
+  const newStory = newGameStory({
     author_ids: [req.user._id],
     content: req.body.content,
     active: true,
   });
-
-  newStory.save().then((story) => res.send(story));
 });
 
 // change 4: router to getting active story
-router.get("/active_story", auth.ensureLoggedIn, (req, res) => {
+router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ active: true }).then((story) => {
-    console.log("HEREE")
+    console.log("HEREE");
     if (story.author_ids.includes(req.user._id)) {
       res.send(story);
     } else {
@@ -74,16 +121,36 @@ router.get("/active_story", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+// get current story
+
+router.get("/CurrentStory", auth.ensureLoggedIn, (req, res) => {
+  const input = req.query._id;
+  if (typeof input !== "undefined") {
+    console.log("checking....");
+    console.log(req.query._id);
+    console.log("reached here");
+    GameStory.findById(req.query._id).then((story) => {
+      res.send(story);
+    });
+  } else {
+    return res.send({});
+  }
+});
+
 // change 5: router for changing the existing story
 // TODO: Figure out how to go about routing the edits made on an existing story
-router.post("/edit_story", auth.ensureLoggedIn, (req, res) => {
-  GameStory.findById(thegamestoryid).then((gameStory) => {
-    gameStory.content = gameStory.content.concat(req.body.content);
-    gameStory.author_ids = gameStory.authors_ids.includes(req.user._id)
-      ? gameStory.author_ids
-      : gameStory.author_ids.push(req.user._id);
-  });
-});
+// router.post("/edit_story", auth.ensureLoggedIn, (req, res) => {
+//   GameStory.findById(req.stories._id).then((gameStory) => {
+//     gameStory.content = gameStory.content.concat(req.body.content);
+//     gameStory.author_ids = gameStory.author_ids.includes(req.user._id)
+//       ? gameStory.author_ids
+//       : gameStory.author_ids.push(req.user._id);
+//   });
+// });
+
+// router.post("/edit_story", auth.ensureLoggedIn, (req, res) => {
+// ;
+// });
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

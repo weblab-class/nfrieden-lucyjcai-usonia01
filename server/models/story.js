@@ -7,6 +7,8 @@ const GameStorySchema = new mongoose.Schema({
   content: String,
   // date_created: String,
   active: Boolean,
+  // code: String,
 });
 
+// create and export a story model
 module.exports = mongoose.model("story", GameStorySchema);
