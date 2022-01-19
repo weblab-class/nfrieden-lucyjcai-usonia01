@@ -1,0 +1,12 @@
+.WaitingRoom-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 30px;
+    padding: 20px;
+  }
+
+  .WaitingRoom-Container {
+    text-align: center;
+    /* display: flex; */
+    /* justify-content: space-around; */
+  }
