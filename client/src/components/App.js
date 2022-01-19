@@ -7,6 +7,7 @@ import GamePage from "./pages/GamePage.js";
 import ActiveStory from "./pages/ActiveStory.js";
 import HomePage from "./pages/Homepage.js";
 import Lobby from "./pages/Lobby.js";
+import Join from "./pages/JoinAuth";
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -48,6 +49,7 @@ const App = () => {
       <div>
         <Router>
           <Lobby path="/new_story" />
+          <Join path="/join" />
           <GamePage path="/gamepage" />
           <HomePage path="/" />
           <ActiveStory path="/active-story" />

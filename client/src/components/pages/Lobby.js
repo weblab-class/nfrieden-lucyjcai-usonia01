@@ -8,7 +8,10 @@ const Lobby = () => {
       {/* We need to make the functionality of each of the button have not yet been implemented */}
       <div className="Lobby-Container">
         <button className="Lobby-Options">Create a new story!</button>
-        <button className="Lobby-Options">Join a created story!</button>
+
+        <Link to="/join">
+          <button className="Lobby-Options">Join a created story!</button>
+        </Link>
       </div>
     </>
   );

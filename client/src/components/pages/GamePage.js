@@ -1,9 +1,4 @@
-import React, { useState, useEffect } from "react";
-import "./GamePage.css";
-import StorySentence from "./StorySentence";
-import { get, post } from "../../utilities";
-
-const GamePage = () => {
+const GamePage = (props) => {
   const [count, setCount] = useState(0);
   const [sentences, setSentences] = useState([]);
   const [inputText, setInputText] = useState("");
@@ -29,19 +24,15 @@ const GamePage = () => {
   const addNewSentence = () => {
     const updatedSentences = [...sentences, inputText];
     setSentences(updatedSentences);
-    // setInputText("");
-    // setCount(0);
-    // post("/api/story", { content: inputText });
 
-    post("/api/story", { _id: storyId, content: inputText }).then((res) => {
-      // set the state of some frontend state variable to the value of res._id
-      if (!storyId) {
-        // console.log(res._id);
-        setStoryId(res._id);
-      }
-      setInputText("");
-      setCount(0);
-    });
+    if (props.existing) {
+      post("/api/Update-story", { code: props.code, content: inputText }).then((res) => {
+        setInputText("");
+        setCount(0);
+      });
+    } else {
+      // Lucy's code
+    }
 
     // index for bolding different people's names
     setSelectedIndex((selectedIndex + 1) % 3);
@@ -51,26 +42,11 @@ const GamePage = () => {
     let stories = [];
     let author_id = "61e4b5459ce83c493c31d313"; // this is mine specifically, it eventually needs to be passed in as a prop? I think
 
-    // STEPS:
-    // 1. where you're handing google auth login, you need to save author id in session storage
-
-    // 2. in this file, you need to retrieve the author id and use it to make a get
-    // request to the "active_story" endpoint to only retrive stories with that author id (this is how you set sentences)
-
-    // 3. also request to retrieve a list of users given the story
-
-    // **************
-
-    // The function below does not work how its supposed to, but its a start.
-    // It saves stuff after reloading, but duplicates it for an undetermined reason
-
     get("/api/stories").then((res) => {
       let stories = [];
       res.map((story) => {
         console.log(story.author_ids, author_id);
-        // if (story.author_ids.includes(author_id)){
         stories.push(story.content);
-        // }
       });
       setSentences(stories);
     });

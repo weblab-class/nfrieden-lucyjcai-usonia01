@@ -50,53 +50,21 @@ router.get("/stories", (req, res) => {
   GameStory.find({}).then((stories) => res.send(stories));
 });
 
-//g
+// update existing story
 
-/// this is supposed to alter tehe story in the database as they are being
-// altered instead of creating new element for some reasons it keeps
-//creating new element
-
-router.post("/story", auth.ensureLoggedIn, (req, res) => {
-  console.log("<<<<<<<");
-  console.log(req.body._id);
-  console.log("<<<<<<<");
-  GameStory.findById(req.body._id).then((story) => {
-    console.log(">>>>");
-    console.log(story);
-    console.log(">>>>");
-    if (story) {
-      console.log("update");
-      if (!story.author_ids.includes(req.user._id)) {
-        story.author_ids = author_ids.push(req.user._id);
-      }
-      story.content = req.body.content;
-      story.save();
-
-      // updateStory.save();
-      // GameStory.findOne({ _id: req.body._id }).then((story) => {
-      //   const authors = story.author_ids;
-      //   if (!authors.includes(req.user_id)) {
-      //     authors.push(req.user._id);
-      //   }
-      //   const content = story.content.concat(" " + req.body.content);
-      //   const toUpdate = {
-      //     author_ids: authors,
-      //     content: content,
-      //   };
-      //   GameStory.replaceOne({ _id: req.body._id }, toUpdate);
-      // });
-    } else {
-      // console.log("create new");
-      const newStory = new GameStory({
-        author_ids: [req.user._id],
-        content: req.body.content,
-        active: true,
-        code: req.body.code,
-      });
-
-      newStory.save().then((story) => res.send(story));
+router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
+  GameStory.find({ code: req.body.code }).then((story) => {
+    if (!story.author_ids.includes(req.user._id)) {
+      story.author_ids = author_ids.push(req.user._id);
     }
+    story.content = req.body.content;
+    story.save();
   });
+});
+
+// checking for existance of a story
+router.get("/search", auth.ensureLoggedIn, (req, res) => {
+  GameStory.find({ code: req.query.code }).then((story) => res.send(story));
 });
 
 //creating new story
@@ -106,13 +74,16 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
     author_ids: [req.user._id],
     content: req.body.content,
     active: true,
+    code: req.body.code,
   });
+
+  newStory.save().then((story) => res.send(newStory));
 });
 
 // change 4: router to getting active story
 router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
-  GameStory.findOne({ active: true }).then((story) => {
-    console.log("HEREE");
+  GameStory.find().then((story) => {
+    // console.log("HEREE");
     if (story.author_ids.includes(req.user._id)) {
       res.send(story);
     } else {
