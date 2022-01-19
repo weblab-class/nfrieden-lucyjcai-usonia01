@@ -29,7 +29,6 @@ const GamePage = () => {
   const addNewSentence = () => {
     const updatedSentences = [...sentences, inputText];
     setSentences(updatedSentences);
-    setInputText("");
     setCount(0);
     // post("/api/story", { content: inputText });
 
@@ -39,6 +38,7 @@ const GamePage = () => {
         // console.log(res._id);
         setStoryId(res._id);
       }
+      setInputText("");
     });
 
     // index for bolding different people's names
