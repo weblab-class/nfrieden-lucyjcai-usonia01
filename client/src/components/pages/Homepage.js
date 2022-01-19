@@ -6,7 +6,7 @@ const HomePage = () => {
 
   // const
   return (
-    <div className="Home-Container" style={{ flexDirection: "row", display: "flex" }}>
+    <div className="Home-Container">
       <div style={{ flex: 0.5 }}>
         <input
           className="Home-Options"
