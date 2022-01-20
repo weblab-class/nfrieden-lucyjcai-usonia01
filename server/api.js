@@ -75,7 +75,7 @@ router.get("/search", auth.ensureLoggedIn, (req, res) => {
 router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
   console.log("creating story");
   console.log("new_story");
-  const newStory = newGameStory({
+  const newStory = GameStory({
     author_ids: [req.user._id],
     content: req.body.content,
     active: true,
