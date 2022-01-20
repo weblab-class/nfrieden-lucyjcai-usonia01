@@ -1,0 +1,34 @@
+/* * {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+} */
+
+.Code-Form {
+  display: block;
+  text-align: center;
+}
+form {
+  display: inline-block;
+
+  /* margin: auto; */
+  margin-top: 18vh;
+  border: 1px solid grey;
+  height: 50vh;
+  width: 50vw;
+}
+.Game-Code {
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+}
+
+/* To be continued */
+.Game-Code label {
+  margin: 10px;
+}
+.Game-Code input {
+}
+.Code-submit {
+}

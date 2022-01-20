@@ -7,6 +7,7 @@ import GamePage from "./pages/GamePage.js";
 import ActiveStory from "./pages/ActiveStory.js";
 import HomePage from "./pages/Homepage.js";
 import Lobby from "./pages/Lobby.js";
+import Join from "./pages/JoinAuth";
 import WaitingRoom from "./pages/WaitingRoom.js";
 import "../utilities.css";
 
@@ -49,7 +50,8 @@ const App = () => {
       <div>
         <Router>
           <Lobby path="/new_story" />
-          <WaitingRoom path="/waitingroom"/>
+          <Join path="/join" />
+          <WaitingRoom path="/waitingroom" />
           <GamePage path="/gamepage" />
           <HomePage path="/" />
           <ActiveStory path="/active-story" />

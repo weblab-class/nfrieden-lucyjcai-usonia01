@@ -1,11 +1,19 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
 .Lobby-Container {
-  justify-content: center;
-  text-align: center;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* align-items: center; */
 }
 
 .Lobby-Options {
+  /* margin: auto; */
   border-style: solid;
   border-width: 2px;
   border-color: darkgray;
@@ -18,4 +26,10 @@
   margin: 30px;
   height: 150px;
   width: 40vw;
+}
+
+.Lobby-Options:hover {
+  background-color: rgb(197, 121, 45);
+  transition: all 0.2s;
+  cursor: pointer;
 }
