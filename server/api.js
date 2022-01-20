@@ -54,6 +54,9 @@ router.get("/stories", (req, res) => {
 
 router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
   GameStory.find({ code: req.body.code }).then((story) => {
+    console.log("***");
+    console.log(story);
+    console.log("***");
     if (!story.author_ids.includes(req.user._id)) {
       story.author_ids = author_ids.push(req.user._id);
     }
@@ -70,6 +73,8 @@ router.get("/search", auth.ensureLoggedIn, (req, res) => {
 //creating new story
 
 router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
+  console.log("creating story");
+  console.log("new_story");
   const newStory = newGameStory({
     author_ids: [req.user._id],
     content: req.body.content,
