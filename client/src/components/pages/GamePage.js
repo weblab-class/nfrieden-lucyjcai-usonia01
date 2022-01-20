@@ -30,10 +30,6 @@ const GamePage = (props) => {
   const addNewSentence = () => {
     const updatedSentences = [...sentences, inputText];
     setSentences(updatedSentences);
-    console.log(">>>");
-    // console.log(props.existing);
-    console.log(props.code);
-    console.log(">>>");
     if (existing) {
       post("/api/Update-story", { code: props.code, content: inputText });
     } else {
@@ -52,12 +48,14 @@ const GamePage = (props) => {
     let stories = [];
     console.log(props.code);
     get("/api/search", { code: props.code }).then((res) => {
+      console.log("checking if search successful");
       console.log(res);
-      if (res) {
+      if (!res.length === 0) {
         stories.push(res.content);
         setExisting(true);
       }
       setSentences(stories);
+      console.log(existing);
     });
   }, []);
 
