@@ -30,12 +30,12 @@ const GamePage = (props) => {
   const addNewSentence = () => {
     const updatedSentences = [...sentences, inputText];
     setSentences(updatedSentences);
-    if (existing) {
-      post("/api/Update-story", { code: props.code, content: inputText });
-    } else {
-      post("/api/new_story", { code: props.code, content: inputText });
-    }
-
+    // if (existing) {
+    //   post("/api/Update-story", { code: props.code, content: inputText });
+    // } else {
+    //   // post("/api/new_story", { code: props.code, content: inputText });
+    // }
+    post("/api/Update-story", { code: props.code, content: updatedSentences.join(" ") });
     setInputText("");
     setCount(0);
 
@@ -50,12 +50,14 @@ const GamePage = (props) => {
     get("/api/search", { code: props.code }).then((res) => {
       console.log("checking if search successful");
       console.log(res);
-      if (!res.length === 0) {
+      if (!res.length == 0) {
         stories.push(res.content);
-        setExisting(true);
+        // setExisting(true);
+      } else {
+        post("/api/new_story", { code: props.code, content: "" });
       }
       setSentences(stories);
-      console.log(existing);
+      // console.log(existing);
     });
   }, []);
 
