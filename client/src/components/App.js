@@ -52,7 +52,7 @@ const App = () => {
           <Lobby path="/new_story" />
           <Join path="/join" />
           <WaitingRoom path="/waitingroom" />
-          <GamePage path="/gamepage" />
+          <GamePage path="/gamepage/:code" />
           <HomePage path="/" />
           <ActiveStory path="/active-story" />
           <NotFound default />

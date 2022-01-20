@@ -9,14 +9,17 @@ import { get, post } from "../../utilities";
 // 3. if not valid --> Sorry try again
 
 const Join = () => {
-  const [storyCode, setstoryCode] = useState(undefined);
-  const [existing, setExisting] = useState(false);
+  // const [storyCode, setstoryCode] = useState(undefined);
+  // const existing = false
+  // const [existing, setExisting] = useState(false);
   const handleJoin = () => {
     setstoryCode(document.getElementsByClassName("Code-textBox"));
     get("/api/search", { code: storyCode }).then((story) => {
       if (story) {
-        setExisting(true);
-        return <GamePage code={storyCode} existing={existing} />;
+        // setExisting(true);
+        console.log(story);
+        console.log(story.code);
+        return <GamePage code={story.code} />;
       } else {
         // give an alert that wrong code was provided
       }
@@ -31,6 +34,9 @@ const Join = () => {
             <input type="number" className="Code-textBox"></input>
           </div>
           <div className="Code-submit">
+            {/* <Link to="/gamepage" state={{code ={story.code}, existing={true}}}>
+
+            </Link> */}
             <button onClick={handleJoin}>Submit!</button>
           </div>
         </form>
