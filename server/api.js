@@ -64,7 +64,7 @@ router.get("/stories", (req, res) => {
 router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
     if (!story.author_ids.includes(req.user._id)) {
-      story.author_ids = author_ids.push(req.user._id);
+      story.author_ids.push(req.user._id);
     }
     story.content = req.body.content;
     story.save();
