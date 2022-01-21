@@ -3,7 +3,6 @@ import "./Homepage.css";
 import Card from "./Card.js";
 import { get, post } from "../../utilities";
 
-
 const HomePage = () => {
   const [feed, setFeed] = useState([]);
 
@@ -13,7 +12,7 @@ const HomePage = () => {
       setFeed(reversedStories);
       console.log("setFeed to existing stories");
       console.log(feed.length);
-    })
+    });
   }, []);
 
   let storiesList = null;
@@ -21,23 +20,16 @@ const HomePage = () => {
   if (hasStories) {
     storiesList = feed.map((storyObj) => (
       <Card content={storyObj.content} storyId={storyObj._id} />
-    ))
+    ));
   } else {
-    storiesList = <div> No stories so far! </div>
+    storiesList = <div> No stories so far! </div>;
   }
 
   return (
     <>
-    <div className="Homepage-title">
-      Welcome to StoryCollab!
-    </div>
-    <div className="Homepage-feedtitle">
-      feed
-    </div>
-    <div className="Homepage-feed">
-      {storiesList}
-    </div>
-
+      <div className="Homepage-title">Welcome to StoryCollab!</div>
+      <div className="Homepage-feedtitle">feed</div>
+      <div className="Homepage-feed">{storiesList}</div>
     </>
   );
 };
