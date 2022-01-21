@@ -6,6 +6,16 @@
     justify-content: center;
 }
 
+.Homepage-instructions {
+    position: relative;
+    left: 75%;
+    display: flex;
+}
+
+/* .Homepage-storiescontent {
+    padding: 20px;
+} */
+
 .Homepage-feed {
     display: flex;
     width: 50%;
@@ -19,5 +29,5 @@
 
 .Homepage-instructionstitle {
     position: relative;
-    right: 25%;
+    left: 75%;
 }

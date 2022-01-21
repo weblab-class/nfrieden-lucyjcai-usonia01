@@ -31,11 +31,19 @@ const HomePage = () => {
     <div className="Homepage-title">
       Welcome to StoryCollab!
     </div>
+    <div className="Homepage-instructionstitle">
+      instructions
+    </div>
+    {/* <div className="Homepage-instructions">
+      these are the instructions
+    </div> */}
     <div className="Homepage-feedtitle">
       feed
     </div>
     <div className="Homepage-feed">
-      {storiesList}
+      <div className="Homepage-storiescontent">
+        {storiesList}
+      </div>
     </div>
 
     </>
