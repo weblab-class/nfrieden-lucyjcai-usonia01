@@ -7,11 +7,11 @@ const HomePage = () => {
   const [feed, setFeed] = useState([]);
 
   useEffect(() => {
-    get("/api/stories").then((stories) => {
+    get("/api/finishedstories").then((stories) => {
       const reversedStories = stories.reverse();
       setFeed(reversedStories);
       console.log("setFeed to existing stories");
-      console.log(feed.length);
+      console.log(feed);
     });
   }, []);
 
