@@ -8,20 +8,28 @@ import { get, post } from "../../utilities";
 // 2. if valid --> take to gamepage
 // 3. if not valid --> Sorry try again
 
+
 const Join = () => {
+
   const handleJoin = () => {
-    setstoryCode(document.getElementsByClassName("Code-textBox"));
-    get("/api/search", { code: storyCode }).then((story) => {
-      if (story) {
-        // setExisting(true);
-        console.log(story);
-        console.log(story.code);
-        return <GamePage code={story.code} />;
-      } else {
-        // give an alert that wrong code was provided
-      }
+    console.log("started handleJoin");
+    console.log(document.getElementsByClassName("Code-textBox")[0].value);
+    get("/api/search", { code: document.getElementsByClassName("Code-textBox")[0].value }).then(() => {
+      console.log("game found!");
+      // if (story) {
+      //   console.log("game found! :)")
+      //   // setExisting(true);
+      //   console.log(story);
+      //   console.log(story.code);
+      //   return <GamePage code={story.code} />;
+      // } else {
+      //   // give an alert that wrong code was provided
+      //   console.log("no existing game found :(")
+      //   alert("This game does not exist.");
+      // }
     });
   };
+  
   return (
     <>
       <div className="Code-Form">
@@ -31,7 +39,7 @@ const Join = () => {
             <input type="text" className="Code-textBox"></input>
           </div>
           <div className="Code-submit">
-            <button>Submit!</button>
+            <button onClick={handleJoin}>Submit!</button>
           </div>
         </form>
       </div>
