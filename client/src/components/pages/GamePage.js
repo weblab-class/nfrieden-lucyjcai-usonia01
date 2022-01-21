@@ -46,9 +46,8 @@ const GamePage = (props) => {
   };
 
   const postStory = () => {
-    get("/api/search", { code: props.code }).then((story) => {
-      console.log(story[0].content);
-      
+    post("/api/post-story", { code: props.code }).then((story) => {
+      console.log(story.active);
     })
   };
 

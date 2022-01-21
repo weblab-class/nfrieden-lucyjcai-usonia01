@@ -59,6 +59,17 @@ router.get("/stories", (req, res) => {
   GameStory.find({}).then((stories) => res.send(stories));
 });
 
+router.get("/finishedstories", (req, res) => {
+  GameStory.find({active: false}).then((stories) => res.send(stories));
+});
+
+router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
+  GameStory.findOne({ code: req.body.code }).then((story) => {
+    story.active = false;
+    story.save();
+  });
+});
+
 // update existing story
 
 router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
