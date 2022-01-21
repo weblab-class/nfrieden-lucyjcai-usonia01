@@ -25,7 +25,7 @@
 
 .my-text {
   position: relative;
-  padding: 24px 0px 24px 0px;
+  padding: 17px 6px 17px 0px;
 }
 
 .Text-space_count {
@@ -54,4 +54,22 @@
 
   width: 70vw;
   height: 60vh;
+}
+
+.checkmark {
+  border: transparent;
+  background-color: transparent;
+  margin: 10px;
+  color: rgb(110, 219, 110);
+}
+
+.xmark {
+  border: transparent;
+  background-color: transparent;
+  margin: 10px;
+  color: red;
+}
+
+.undoMessage {
+  font-size: 10px;
 }
