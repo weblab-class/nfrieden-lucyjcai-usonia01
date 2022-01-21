@@ -24,7 +24,7 @@ const code = makeid(5);
 //   return <GamePage  code={code} />;
 // };
 const WaitingRoom = () => {
-  useEffect(() => {}, []);
+  // useEffect(() => {}, []);
 
   return (
     <>
