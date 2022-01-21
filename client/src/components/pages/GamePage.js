@@ -4,7 +4,6 @@ import StorySentence from "./StorySentence";
 import { get, post } from "../../utilities";
 import { Link, Router } from "@reach/router";
 
-
 const GamePage = (props) => {
   const [count, setCount] = useState(0);
   const [sentences, setSentences] = useState([]);
@@ -48,12 +47,12 @@ const GamePage = (props) => {
   const postStory = () => {
     post("/api/post-story", { code: props.code }).then((story) => {
       console.log(story.active);
-    })
+    });
   };
 
   const enableTurn = () => {
     document.getElementById("submitButton").disabled = false;
-  }
+  };
 
   // story so far
   useEffect(() => {
@@ -134,7 +133,7 @@ const GamePage = (props) => {
             <div className="AddingButton">
               <input
                 className="item GamePage-addButton"
-                id = "submitButton"
+                id="submitButton"
                 type="button"
                 value="Add!"
                 onClick={addNewSentence}
@@ -142,15 +141,15 @@ const GamePage = (props) => {
               ></input>
             </div>
             <div style={{ padding: 24, flex: 0.3 }}>
-            <Link to="/SubmittedPage">
-              <input
-                className="item GamePage-postButton"
-                id = "postButton"
-                type="button"
-                value="Post!"
-                onClick={postStory}
-              ></input>
-            </Link>
+              <Link to="/SubmittedPage">
+                <input
+                  className="item GamePage-postButton"
+                  id="postButton"
+                  type="button"
+                  value="Post!"
+                  onClick={postStory}
+                ></input>
+              </Link>
             </div>
           </div>
         </div>
