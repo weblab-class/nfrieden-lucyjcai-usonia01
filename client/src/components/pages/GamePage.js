@@ -51,7 +51,10 @@ const GamePage = (props) => {
       console.log("checking if search successful");
       console.log(res);
       if (!res.length == 0) {
-        stories.push(res.content);
+        console.log("story content ...");
+        console.log(res.content);
+        console.log("<<>>");
+        stories.push(res[0].content);
         // setExisting(true);
       } else {
         post("/api/new_story", { code: props.code, content: "" });

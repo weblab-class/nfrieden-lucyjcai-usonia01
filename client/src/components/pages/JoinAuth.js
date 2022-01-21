@@ -1,41 +1,46 @@
 import React, { useState, useEffect } from "react";
 import { Link, Router } from "@reach/router";
-import GamePage from "../pages/GamePage.js";
-import "./JoinAuth.css";
+import GamePage from "../pages/GamePage";
+import "./joinAuth.css";
 import { get, post } from "../../utilities";
 
-// 1. change for code validity
-// 2. if valid --> take to gamepage
-// 3. if not valid --> Sorry try again
-
 const Join = () => {
-  const handleJoin = () => {
-    setstoryCode(document.getElementsByClassName("Code-textBox"));
-    get("/api/search", { code: storyCode }).then((story) => {
-      if (story) {
-        // setExisting(true);
-        console.log(story);
-        console.log(story.code);
-        return <GamePage code={story.code} />;
+  const [code, setCode] = useState("");
+
+  const handleSubmit = (event) => {
+    get("/api/search", { code: code }).then((result) => {
+      if (!result.length == 0) {
+        window.location.href = `/gamepage/${code}`;
       } else {
-        // give an alert that wrong code was provided
+        alert("Invalid Game Code");
       }
     });
+
+    event.preventDefault();
   };
+
+  const onChange = (e) => {
+    setCode(e.target.value);
+  };
+
   return (
-    <>
-      <div className="Code-Form">
-        <form>
-          <div className="Game-Code">
-            <label>Game Code</label>
-            <input type="text" className="Code-textBox"></input>
-          </div>
-          <div className="Code-submit">
-            <button>Submit!</button>
-          </div>
-        </form>
-      </div>
-    </>
+    <div className="Code-Form">
+      <form onSubmit={handleSubmit}>
+        <div className="Game-Code">
+          <label>Game Code</label>
+          <input
+            type="text"
+            minLength="5"
+            onChange={onChange}
+            className="Code-Box"
+            placeholder="Game code"
+          ></input>
+        </div>
+        <div className="Code-submit">
+          <button>Submit!</button>
+        </div>
+      </form>
+    </div>
   );
 };
 
