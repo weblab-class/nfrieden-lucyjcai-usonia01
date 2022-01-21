@@ -54,12 +54,6 @@ router.get("/stories", (req, res) => {
 
 router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
-    console.log("***");
-    console.log(story);
-    console.log("***");
-    console.log(story.author_ids);
-    console.log("$$$$");
-    console.log(req.user._id);
     if (!story.author_ids.includes(req.user._id)) {
       story.author_ids = author_ids.push(req.user._id);
     }
@@ -85,6 +79,11 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
   });
 
   newStory.save().then((story) => res.send(newStory));
+});
+
+// router to getting all people who contributed to a story
+router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
+  GameStory.find({ code: req.query.code }).then((story) => res.send(story.author_ids));
 });
 
 // change 4: router to getting active story

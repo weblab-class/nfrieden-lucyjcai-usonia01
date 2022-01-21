@@ -30,11 +30,6 @@ const GamePage = (props) => {
   const addNewSentence = () => {
     const updatedSentences = [...sentences, inputText];
     setSentences(updatedSentences);
-    // if (existing) {
-    //   post("/api/Update-story", { code: props.code, content: inputText });
-    // } else {
-    //   // post("/api/new_story", { code: props.code, content: inputText });
-    // }
     post("/api/Update-story", { code: props.code, content: updatedSentences.join(" ") });
     setInputText("");
     setCount(0);
@@ -67,9 +62,8 @@ const GamePage = (props) => {
   return (
     <>
       <div className="Story-space">
-        <div style={{ flexDirection: "row", display: "flex" }}>
-          {/* This function defines the additive text space*/}
-          <div className="item test" style={{ flex: 0.7 }}>
+        <div className="OurStory">
+          <div className="item test">
             {sentences.length > 0
               ? sentences.map((sentences, index) => (
                   <StorySentence key={index} content={sentences} />
@@ -77,24 +71,15 @@ const GamePage = (props) => {
               : "Your changing story will appear here..."}
           </div>
 
-          {/* This function is very messy but it makes the dots on the side */}
-          <div style={{ flex: 0.3, paddingLeft: 30, paddingRight: 20 }}>
-            <div style={{ fontWeight: "bold", marginBottom: 5, fontSize: "25px" }}>
-              Contributors
-            </div>
+          <div className="ContributorsSpace">
+            <div className="Contributors">Contributors</div>
             {userDictionary.map((userDictionary, i) => (
               <div style={{ width: "100%", padding: 10, display: "flex", alignItems: "center" }}>
                 <span
-                  style={{
-                    height: "25px",
-                    width: "25px",
-                    "background-color": userDictionary.color,
-                    "border-radius": "50%",
-                    display: "inline-block",
-                  }}
+                  className="ColorDisplay"
+                  style={{ "background-color": userDictionary.color }}
                 ></span>
 
-                {/* function below controls which name is bolded */}
                 {i == selectedIndex ? (
                   <span style={{ fontWeight: 700, marginLeft: 10 }}>{userDictionary.name}</span>
                 ) : (
@@ -105,9 +90,8 @@ const GamePage = (props) => {
           </div>
         </div>
 
-        <div style={{ flexDirection: "row", display: "flex" }}>
+        <div className="TextingSpace">
           <div className="Add">
-            {/* For the text inserter*/}
             <div className="my-text">
               <textarea
                 className="item Text-space"
@@ -119,8 +103,7 @@ const GamePage = (props) => {
               <span className="Text-space_count"> {count}/300 (Max Character)</span>
             </div>
 
-            {/* For the button*/}
-            <div style={{ padding: 24, flex: 0.3 }}>
+            <div className="AddingButton">
               <input
                 className="item GamePage-addButton"
                 type="button"
