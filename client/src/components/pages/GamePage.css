@@ -23,6 +23,14 @@
   border-radius: var(--l);
 }
 
+.GamePage-postButton {
+  width: 15vh;
+  height: 15vh;
+  font-family: "Roboto", sans-serif;
+  background-color: #ccd5ae;
+  border-radius: var(--l);
+}
+
 .my-text {
   position: relative;
   padding: 17px 6px 17px 0px;
