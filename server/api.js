@@ -95,11 +95,11 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
 router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
     const authors = story.author_ids;
-    console.log("this is the authors:", authors);
+    // console.log("this is the authors:", authors);
     const Toreturn = authors.map((id) => Name(id));
-    console.log("before:", Toreturn);
+    // console.log("before:", Toreturn);
     Promise.all(Toreturn).then((result) => {
-      console.log("toreturn:", Toreturn);
+      // console.log("toreturn:", Toreturn);
       res.send(result);
     });
     // res.send(Toreturn);
