@@ -26,6 +26,15 @@ const router = express.Router();
 const socketManager = require("./server-socket");
 const story = require("./models/story");
 
+// router to get all the names of people who contributed to a story
+
+const Name = async (id) => {
+  const user = await User.findOne({ _id: id });
+  console.log("Usersname: ", user);
+  console.log(user.name);
+  return user.name;
+};
+
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
@@ -71,6 +80,7 @@ router.get("/search", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
   console.log("creating story");
+  console.log("this is user-id:", req.user._id);
   const newStory = GameStory({
     author_ids: [req.user._id],
     content: req.body.content,
@@ -81,15 +91,24 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
   newStory.save().then((story) => res.send(newStory));
 });
 
-// router to getting all people who contributed to a story
+// router to getting all ids people who contributed to a story
 router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
-  GameStory.find({ code: req.query.code }).then((story) => res.send(story.author_ids));
+  GameStory.findOne({ code: req.query.code }).then((story) => {
+    const authors = story.author_ids;
+    console.log("this is the authors:", authors);
+    const Toreturn = authors.map((id) => Name(id));
+    console.log("before:", Toreturn);
+    Promise.all(Toreturn).then((result) => {
+      console.log("toreturn:", Toreturn);
+      res.send(result);
+    });
+    // res.send(Toreturn);
+  });
 });
 
 // change 4: router to getting active story
 router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
   GameStory.find().then((story) => {
-    // console.log("HEREE");
     if (story.author_ids.includes(req.user._id)) {
       res.send(story);
     } else {
@@ -103,9 +122,6 @@ router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
 router.get("/CurrentStory", auth.ensureLoggedIn, (req, res) => {
   const input = req.query._id;
   if (typeof input !== "undefined") {
-    console.log("checking....");
-    console.log(req.query._id);
-    console.log("reached here");
     GameStory.findById(req.query._id).then((story) => {
       res.send(story);
     });

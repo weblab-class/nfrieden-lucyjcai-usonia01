@@ -10,14 +10,17 @@ const GamePage = (props) => {
   // const [storyId, setStoryId] = useState(undefined);
   const [existing, setExisting] = useState(false);
 
-  // this needs to be brought in from the back-end
-  // right now its just a hard-coded dictionary
-  const [userDictionary, setUserDictionary] = useState([
-    { color: "gold", name: "Nadia Frieden" },
-    { color: "blue", name: "Lucy Cai" },
-    { color: "pink", name: "Sonia Uwase" },
-  ]);
-  const [userArray, setUserArray] = useState(["Nadia Frieden", "Lucy Cai", "Sonia Uwase"]);
+  //Things that I am commenting for now
+  // const [userDictionary, setUserDictionary] = useState([
+  //   { color: "gold", name: "Nadia Frieden" },
+  //   { color: "blue", name: "Lucy Cai" },
+  //   { color: "pink", name: "Sonia Uwase" },
+  // ]);
+
+  const [userArray, setUserArray] = useState([]);
+
+  // get Contributors
+
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const CharCount = (event) => {
@@ -35,7 +38,9 @@ const GamePage = (props) => {
     setCount(0);
 
     // index for bolding different people's names
-    setSelectedIndex((selectedIndex + 1) % 3);
+    if (!userArray.length === 0) {
+      setSelectedIndex((selectedIndex + 1) % useArray.length);
+    }
   };
 
   // story so far
@@ -51,10 +56,21 @@ const GamePage = (props) => {
         console.log("<<>>");
         stories.push(res[0].content);
         // setExisting(true);
+
+        get("/api/contributors", { code: props.code }).then((result) => {
+          console.log("contributors:", result);
+          setUserArray(result);
+        });
       } else {
-        post("/api/new_story", { code: props.code, content: "" });
+        post("/api/new_story", { code: props.code, content: "" }).then(() => {
+          get("/api/contributors", { code: props.code }).then((result) => {
+            console.log("contributors:", result);
+            setUserArray(result);
+          });
+        });
       }
       setSentences(stories);
+
       // console.log(existing);
     });
   }, []);
@@ -66,24 +82,24 @@ const GamePage = (props) => {
           <div className="item test">
             {sentences.length > 0
               ? sentences.map((sentences, index) => (
-                  <StorySentence key={index} content={sentences} />
+                  <StorySentence key={index * 24645} content={sentences} />
                 ))
               : "Your changing story will appear here..."}
           </div>
 
           <div className="ContributorsSpace">
             <div className="Contributors">Contributors</div>
-            {userDictionary.map((userDictionary, i) => (
-              <div style={{ width: "100%", padding: 10, display: "flex", alignItems: "center" }}>
-                <span
-                  className="ColorDisplay"
-                  style={{ "background-color": userDictionary.color }}
-                ></span>
+            {userArray.map((user, i) => (
+              <div
+                key={user + i}
+                style={{ width: "100%", padding: 10, display: "flex", alignItems: "center" }}
+              >
+                <span className="ColorDisplay"></span>
 
                 {i == selectedIndex ? (
-                  <span style={{ fontWeight: 700, marginLeft: 10 }}>{userDictionary.name}</span>
+                  <span style={{ fontWeight: 700, marginLeft: 10 }}>{user}</span>
                 ) : (
-                  <span style={{ fontWeight: 500, marginLeft: 10 }}>{userDictionary.name}</span>
+                  <span style={{ fontWeight: 500, marginLeft: 10, display: "block" }}>{user}</span>
                 )}
               </div>
             ))}

@@ -60,9 +60,9 @@
 .ColorDisplay {
   height: 25px;
   width: 25px;
-
+  border: 1px solid;
   border-radius: 50%;
-  display: inline-block;
+  display: block;
   /* randomly generate a background color  */
 }
 
