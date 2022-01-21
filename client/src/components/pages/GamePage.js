@@ -11,18 +11,16 @@ const GamePage = (props) => {
   const [inputText, setInputText] = useState("");
   // const [storyId, setStoryId] = useState(undefined);
   const [existing, setExisting] = useState(false);
+  const [endGameVote, setEndGameVote] = useState(false);
 
-  //Things that I am commenting for now
+  // this needs to be brought in from the back-end
+  // right now its just a hard-coded dictionary
   // const [userDictionary, setUserDictionary] = useState([
   //   { color: "gold", name: "Nadia Frieden" },
   //   { color: "blue", name: "Lucy Cai" },
   //   { color: "pink", name: "Sonia Uwase" },
   // ]);
-
   const [userArray, setUserArray] = useState([]);
-
-  // get Contributors
-
   const [selectedIndex, setSelectedIndex] = useState(0);
 
   const CharCount = (event) => {
@@ -40,11 +38,21 @@ const GamePage = (props) => {
     setCount(0);
 
     // index for bolding different people's names
-    if (!userArray.length === 0) {
-      setSelectedIndex((selectedIndex + 1) % useArray.length);
+    if (!userArray.length === 0){
+      setSelectedIndex((selectedIndex + 1) % userArray.length);
     }
+    
   };
 
+  const voteOnGameState = () => {
+    if (endGameVote === true) {
+      setEndGameVote(false);
+    } else {
+      setEndGameVote(true);
+    }
+    console.log(endGameVote);
+  }
+  
   const postStory = () => {
     post("/api/post-story", { code: props.code }).then((story) => {
       console.log(story.active);
@@ -69,20 +77,17 @@ const GamePage = (props) => {
         stories.push(res[0].content);
         // setExisting(true);
 
-        get("/api/contributors", { code: props.code }).then((result) => {
-          console.log("contributors:", result);
+        get("/api/contributors", {code: props.code}).then((result) => {
           setUserArray(result);
-        });
+        })
       } else {
         post("/api/new_story", { code: props.code, content: "" }).then(() => {
-          get("/api/contributors", { code: props.code }).then((result) => {
-            console.log("contributors:", result);
+          get("/api/contributors", {code: props.code}).then((result) => {
             setUserArray(result);
-          });
+          })
         });
       }
       setSentences(stories);
-
       // console.log(existing);
     });
   }, []);
@@ -90,36 +95,76 @@ const GamePage = (props) => {
   return (
     <>
       <div className="Story-space">
-        <div className="OurStory">
-          <div className="item test">
+        <div style={{ flexDirection: "row", display: "flex" }}>
+          {/* This function defines the additive text space*/}
+          <div className="item test" style={{ flex: 0.7 }}>
             {sentences.length > 0
               ? sentences.map((sentences, index) => (
-                  <StorySentence key={index * 24645} content={sentences} />
+                  <StorySentence key={index*2465343} content={sentences} />
                 ))
               : "Your changing story will appear here..."}
           </div>
 
-          <div className="ContributorsSpace">
-            <div className="Contributors">Contributors</div>
-            {userArray.map((user, i) => (
-              <div
-                key={user + i}
-                style={{ width: "100%", padding: 10, display: "flex", alignItems: "center" }}
-              >
-                <span className="ColorDisplay"></span>
+          {/* This function is very messy but it makes the dots on the side */}
+          <div style={{ flex: 0.3, paddingLeft: 30, paddingRight: 20 }}>
+            <div style={{flexDirection: "column", display: "flex", height:"100%"}}>
 
-                {i == selectedIndex ? (
-                  <span style={{ fontWeight: 700, marginLeft: 10 }}>{user}</span>
-                ) : (
-                  <span style={{ fontWeight: 500, marginLeft: 10, display: "block" }}>{user}</span>
-                )}
+              {/* Contributors Bar*/}
+              <div style={{flex: 0.8}}>
+                <div style={{ fontWeight: "bold", marginBottom: 5, fontSize: "25px"}}>
+                  Contributors
+                </div>
+                {userArray.map((user, i) => (
+                  <div style={{ width: "100%", padding: 10, display: "flex", alignItems: "center" }}>
+                    <span
+                      style={{
+                        height: "25px",
+                        width: "25px",
+                        // "background-color": userDictionary.color,
+                        border: "1px solid",
+                        "border-radius": "50%",
+                        display: "inline-block",
+                      }}
+                    ></span>
+
+                    {/* function below controls which name is bolded */}
+                    {i == selectedIndex ? (
+                      <span style={{ fontWeight: 700, marginLeft: 10 }}>{user}</span>
+                    ) : (
+                      <span style={{ fontWeight: 500, marginLeft: 10 }}>{user}</span>
+                    )}
+                  </div>
+                ))}
               </div>
-            ))}
+             
+              {/* Vote to end game */}
+              <div style={{flex: 0.2}}>
+                <div style={{fontWeight: "bold", marginBottom: 5, fontSize: "20px"}}>
+                  vote to end game:
+                  {endGameVote ? (
+                      <button className="xmark" onClick={voteOnGameState}>
+                        <i class="fas fa-times-circle fa-3x"></i>                
+                      </button>
+                  ) : (
+                    <button className="checkmark" onClick={voteOnGameState}>
+                      <i class="fas fa-check-square fa-3x"></i>                
+                    </button>
+                  )}
+                </div>
+              {endGameVote ? (
+                <p>Press the button again to undo.</p>
+              ) : (
+                <p>You can undo this vote if you change your mind.</p>
+              )}
+              </div>
+
+            </div>
           </div>
         </div>
 
-        <div className="TextingSpace">
-          <div className="Add">
+        <div style={{ flexDirection: "row", display: "flex" }}>
+          <div className="Add" style={{flex: 0.7}}>
+            {/* For the text inserter*/}
             <div className="my-text">
               <textarea
                 className="item Text-space"
@@ -128,10 +173,11 @@ const GamePage = (props) => {
                 maxLength="300"
                 value={inputText}
               ></textarea>
-              <span className="Text-space_count"> {count}/300 (Max Character)</span>
+              <span className="Text-space_count"> {count}/300 (Max Characters)</span>
             </div>
 
-            <div className="AddingButton">
+            {/* For the button*/}
+            <div style={{flex: 0.3 }}>
               <input
                 className="item GamePage-addButton"
                 id = "submitButton"
