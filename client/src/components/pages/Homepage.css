@@ -1,0 +1,23 @@
+.Homepage-title {
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    margin: 20px;
+    justify-content: center;
+}
+
+.Homepage-feed {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+
+.Homepage-feedtitle {
+    position: relative;
+    left: 25%;
+}
+
+.Homepage-instructionstitle {
+    position: relative;
+    right: 25%;
+}

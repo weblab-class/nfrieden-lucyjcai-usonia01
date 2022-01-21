@@ -61,7 +61,7 @@ router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
     console.log("$$$$");
     console.log(req.user._id);
     if (!story.author_ids.includes(req.user._id)) {
-      story.author_ids = author_ids.push(req.user._id);
+      story.author_ids.push(req.user._id);
     }
     story.content = req.body.content;
     story.save();

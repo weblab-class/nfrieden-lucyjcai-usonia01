@@ -1,12 +1,44 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Homepage.css";
+import Card from "./Card.js";
+import { get, post } from "../../utilities";
+
 
 const HomePage = () => {
-  // const [content, setContent] = useState([]);
+  const [feed, setFeed] = useState([]);
 
-  // const
+  useEffect(() => {
+    get("/api/stories").then((stories) => {
+      const reversedStories = stories.reverse();
+      setFeed(reversedStories);
+      console.log("setFeed to existing stories");
+      console.log(feed.length);
+    })
+  }, []);
+
+  let storiesList = null;
+  const hasStories = feed.length !== 0;
+  if (hasStories) {
+    storiesList = feed.map((storyObj) => (
+      <Card content={storyObj.content} storyId={storyObj._id} />
+    ))
+  } else {
+    storiesList = <div> No stories so far! </div>
+  }
+
   return (
-    <>This is the Homepage.</>
+    <>
+    <div className="Homepage-title">
+      Welcome to StoryCollab!
+    </div>
+    <div className="Homepage-feedtitle">
+      feed
+    </div>
+    <div className="Homepage-feed">
+      {storiesList}
+    </div>
+
+    </>
   );
 };
 

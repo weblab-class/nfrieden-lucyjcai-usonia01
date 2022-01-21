@@ -9,6 +9,9 @@ import HomePage from "./pages/Homepage.js";
 import Lobby from "./pages/Lobby.js";
 import Join from "./pages/JoinAuth";
 import WaitingRoom from "./pages/WaitingRoom.js";
+import SubmittedPage from "./pages/SubmittedPage.js";
+import ViewStory from "./pages/ViewStory.js";
+
 import "../utilities.css";
 
 import { socket } from "../client-socket.js";
@@ -53,8 +56,10 @@ const App = () => {
           <Join path="/join" />
           <WaitingRoom path="/waitingroom" />
           <GamePage path="/gamepage/:code" />
+          {/* <ViewStory path="/ViewStory/:storyId" /> */}
           <HomePage path="/" />
           <ActiveStory path="/active-story" />
+          <SubmittedPage path="/SubmittedPage" />
           <NotFound default />
         </Router>
       </div>

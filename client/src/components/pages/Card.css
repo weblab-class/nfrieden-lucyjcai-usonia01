@@ -1,0 +1,14 @@
+.Card-container{
+    display: flex;
+    /* margin: 15px; */
+    flex-direction: column;
+    border-style: solid;
+    border-width: 2px;
+    border-color: darkgray;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+.Card-title {
+    font-weight: bold;
+}

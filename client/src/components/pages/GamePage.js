@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./GamePage.css";
 import StorySentence from "./StorySentence";
 import { get, post } from "../../utilities";
+import { Link, Router } from "@reach/router";
+
 
 const GamePage = (props) => {
   const [count, setCount] = useState(0);
@@ -42,6 +44,17 @@ const GamePage = (props) => {
     // index for bolding different people's names
     setSelectedIndex((selectedIndex + 1) % 3);
   };
+
+  const postStory = () => {
+    get("/api/search", { code: props.code }).then((story) => {
+      console.log(story[0].content);
+      
+    })
+  };
+
+  const enableTurn = () => {
+    document.getElementById("submitButton").disabled = false;
+  }
 
   // story so far
   useEffect(() => {
@@ -123,10 +136,23 @@ const GamePage = (props) => {
             <div style={{ padding: 24, flex: 0.3 }}>
               <input
                 className="item GamePage-addButton"
+                id = "submitButton"
                 type="button"
                 value="Add!"
                 onClick={addNewSentence}
+                // disabled
               ></input>
+            </div>
+            <div style={{ padding: 24, flex: 0.3 }}>
+            <Link to="/SubmittedPage">
+              <input
+                className="item GamePage-postButton"
+                id = "postButton"
+                type="button"
+                value="Post!"
+                onClick={postStory}
+              ></input>
+            </Link>
             </div>
           </div>
         </div>
