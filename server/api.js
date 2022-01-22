@@ -69,6 +69,7 @@ router.get("/finishedstories", (req, res) => {
   GameStory.find({active: false}).then((stories) => res.send(stories));
 });
 
+
 router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
     story.active = false;
@@ -160,6 +161,18 @@ router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
     } else {
       return res.send({});
     }
+  });
+});
+
+router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
+  let myStories = [];
+  GameStory.findOne({active: false}).then((story) => {
+    console.log("story author ids are: ", story.author_ids);
+    console.log("req user id is: ", req.user._id);
+    if (story.author_ids.includes(req.user._id)) {
+      myStories.push(story);
+    } 
+    res.send(myStories);
   });
 });
 

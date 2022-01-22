@@ -1,0 +1,7 @@
+.MyStories-title {
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
