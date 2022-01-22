@@ -5,6 +5,7 @@ import { get, post } from "../../utilities";
 
 const HomePage = () => {
   const [feed, setFeed] = useState([]);
+  const [authors, setAuthors] = useState([]);
 
   useEffect(() => {
     get("/api/finishedstories").then((stories) => {
@@ -19,7 +20,12 @@ const HomePage = () => {
   const hasStories = feed.length !== 0;
   if (hasStories) {
     storiesList = feed.map((storyObj) => (
-      <Card content={storyObj.content} storyId={storyObj._id} />
+      <Card
+        content={storyObj.content}
+        storyId={storyObj._id}
+        title={storyObj.title}
+        code={storyObj.code}
+      />
     ));
   } else {
     storiesList = <div> No stories so far! </div>;

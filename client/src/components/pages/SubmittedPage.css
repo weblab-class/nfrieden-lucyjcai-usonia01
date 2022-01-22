@@ -1,0 +1,25 @@
+.SubmittedPage-title {
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.SubmittedPage-subtitle {
+    font-size: 20px;
+    display: flex;
+    justify-content: center;
+    margin: 20px;
+}
+
+.SubmittedPage-form {
+    display: block;
+    text-align: center;
+    border: none;
+  }
+
+.conclusion {
+    position: relative;
+    top: 30px;
+}

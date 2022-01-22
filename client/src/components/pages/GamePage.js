@@ -42,8 +42,25 @@ const GamePage = (props) => {
   };
 
   const postStory = () => {
-    post("/api/post-story", { code: props.code }).then((story) => {
-      console.log(story.active);
+    setEndGameVote(true);
+    post("/api/vote-to-end").then(
+      console.log("user has voted to end! these are the contributors: ", userArray)
+    );
+    get("/api/voters", { code: props.code }).then((votes) => {
+      console.log("these are contributors:", votes);
+      let numberOfVotes = 0;
+      for (let i = 0; i < votes.length; i++) {
+        if (votes[i] === true) {
+          numberOfVotes++;
+        }
+      }
+      console.log("numberOfVotes: ", numberOfVotes);
+      if (numberOfVotes > votes.length / 2) {
+        console.log("hehe vote passed");
+        post("/api/post-story", { code: props.code }).then(
+          (window.location.href = `/SubmittedPage/${props.code}`)
+        );
+      }
     });
   };
 
@@ -104,12 +121,12 @@ const GamePage = (props) => {
                 <div style={{ fontWeight: "bold", marginBottom: 5, fontSize: "20px" }}>
                   vote to end game:
                   {endGameVote ? (
-                    <button className="xmark" onClick={voteOnGameState}>
-                      <i class="fas fa-times-circle fa-3x"></i>
-                    </button>
-                  ) : (
                     <button className="checkmark" onClick={voteOnGameState}>
                       <i class="fas fa-check-square fa-3x"></i>
+                    </button>
+                  ) : (
+                    <button className="xmark" onClick={postStory}>
+                      <i class="fas fa-times-circle fa-3x"></i>
                     </button>
                   )}
                 </div>
@@ -150,13 +167,13 @@ const GamePage = (props) => {
             </div>
             <div style={{ padding: 24, flex: 0.3 }}>
               <Link to="/SubmittedPage">
-                <input
-                  className="item GamePage-postButton"
-                  id="postButton"
-                  type="button"
-                  value="Post!"
-                  onClick={postStory}
-                ></input>
+                {/* <input
+                className="item GamePage-postButton"
+                id = "postButton"
+                type="button"
+                value="Post!"
+                onClick={postStory}
+              ></input> */}
               </Link>
             </div>
           </div>

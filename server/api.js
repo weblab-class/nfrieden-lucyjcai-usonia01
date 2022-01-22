@@ -35,6 +35,12 @@ const Name = async (id) => {
   return user.name;
 };
 
+const Vote = async (id) => {
+  const user = await User.findOne({ _id: id });
+  console.log(user.voteEnd);
+  return user.voteEnd;
+};
+
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
@@ -73,10 +79,28 @@ router.get("/finishedstories", (req, res) => {
   GameStory.find({ active: false }).then((stories) => res.send(stories));
 });
 
+
 router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
     story.active = false;
     story.save();
+  });
+});
+
+router.post("/set-title", auth.ensureLoggedIn, (req, res) => {
+  console.log("at least set-title is running");
+  console.log(req.body.code, req.body.title);
+  GameStory.findOne({ code: req.body.code }).then((story) => {
+    story.title = req.body.title;
+    story.save();
+  })
+});
+
+router.post("/vote-to-end", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({ _id: req.user._id }).then((user) => {
+    user.voteEnd = true;
+    user.save();
+    console.log("this is voteEnd of user:", user.voteEnd);
   });
 });
 
@@ -113,7 +137,7 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
 });
 
 // router to getting all ids people who contributed to a story
-router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
+router.get("/contributors", (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
     const authors = story.author_ids;
     // console.log("this is the authors:", authors);
@@ -121,6 +145,18 @@ router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
     // console.log("before:", Toreturn);
     Promise.all(Toreturn).then((result) => {
       // console.log("toreturn:", Toreturn);
+      res.send(result);
+    });
+    // res.send(Toreturn);
+  });
+});
+
+router.get("/voters", auth.ensureLoggedIn, (req, res) => {
+  GameStory.findOne({ code: req.query.code }).then((story) => {
+    const voters = story.author_ids;
+    console.log("this is the voters:", voters);
+    const Toreturn = voters.map((id) => Vote(id));
+    Promise.all(Toreturn).then((result) => {
       res.send(result);
     });
     // res.send(Toreturn);
@@ -135,6 +171,18 @@ router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
     } else {
       return res.send({});
     }
+  });
+});
+
+router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
+  let myStories = [];
+  GameStory.findOne({active: false}).then((story) => {
+    console.log("story author ids are: ", story.author_ids);
+    console.log("req user id is: ", req.user._id);
+    if (story.author_ids.includes(req.user._id)) {
+      myStories.push(story);
+    } 
+    res.send(myStories);
   });
 });
 
