@@ -35,6 +35,12 @@ const Name = async (id) => {
   return user.name;
 };
 
+const Vote = async (id) => {
+  const user = await User.findOne({ _id: id });
+  console.log(user.voteEnd);
+  return user.voteEnd;
+};
+
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
@@ -67,6 +73,14 @@ router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
     story.active = false;
     story.save();
+  });
+});
+
+router.post("/vote-to-end", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({ _id: req.user._id }).then((user) => {
+    user.voteEnd = true;
+    user.save();
+    console.log("this is voteEnd of user:", user.voteEnd);
   });
 });
 
@@ -111,6 +125,18 @@ router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
     console.log("before:", Toreturn);
     Promise.all(Toreturn).then((result) => {
       console.log("toreturn:", Toreturn);
+      res.send(result);
+    });
+    // res.send(Toreturn);
+  });
+});
+
+router.get("/voters", auth.ensureLoggedIn, (req, res) => {
+  GameStory.findOne({ code: req.query.code }).then((story) => {
+    const voters = story.author_ids;
+    console.log("this is the voters:", voters);
+    const Toreturn = voters.map((id) => Vote(id));
+    Promise.all(Toreturn).then((result) => {
       res.send(result);
     });
     // res.send(Toreturn);
