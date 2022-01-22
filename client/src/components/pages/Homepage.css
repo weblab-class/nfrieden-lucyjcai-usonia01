@@ -1,15 +1,15 @@
 .Homepage-title {
-    font-weight: bold;
-    font-size: 30px;
-    display: flex;
-    margin: 20px;
-    justify-content: center;
+  font-weight: bold;
+  font-size: 30px;
+  display: flex;
+  margin: 20px;
+  justify-content: center;
 }
 
 .Homepage-instructions {
-    position: relative;
-    left: 75%;
-    display: flex;
+  position: relative;
+  left: 75%;
+  display: flex;
 }
 
 /* .Homepage-storiescontent {
@@ -17,17 +17,17 @@
 } */
 
 .Homepage-feed {
-    display: flex;
-    width: 50%;
-    flex-direction: column;
+  display: flex;
+  width: 50%;
+  flex-direction: column;
 }
 
 .Homepage-feedtitle {
-    position: relative;
-    left: 25%;
+  position: relative;
+  left: 25%;
 }
 
 .Homepage-instructionstitle {
-    position: relative;
-    left: 75%;
+  position: relative;
+  left: 75%;
 }

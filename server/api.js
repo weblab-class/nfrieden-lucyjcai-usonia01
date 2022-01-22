@@ -46,6 +46,16 @@ router.get("/whoami", (req, res) => {
   res.send(req.user);
 });
 
+// whoamI Name
+router.get("/MyName", (req, res) => {
+  if (!req.user) {
+    // not logged in
+    return res.send({});
+  }
+
+  res.send(req.user.name);
+});
+
 router.post("/initsocket", (req, res) => {
   // do nothing if user not logged in
   if (req.user)
@@ -119,7 +129,7 @@ router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
 
 // change 4: router to getting active story
 router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
-  GameStory.find().then((story) => {
+  GameStory.find({ active: false }).then((story) => {
     if (story.author_ids.includes(req.user._id)) {
       res.send(story);
     } else {
@@ -141,20 +151,9 @@ router.get("/CurrentStory", auth.ensureLoggedIn, (req, res) => {
   }
 });
 
-// change 5: router for changing the existing story
-// TODO: Figure out how to go about routing the edits made on an existing story
-// router.post("/edit_story", auth.ensureLoggedIn, (req, res) => {
-//   GameStory.findById(req.stories._id).then((gameStory) => {
-//     gameStory.content = gameStory.content.concat(req.body.content);
-//     gameStory.author_ids = gameStory.author_ids.includes(req.user._id)
-//       ? gameStory.author_ids
-//       : gameStory.author_ids.push(req.user._id);
-//   });
-// });
-
-// router.post("/edit_story", auth.ensureLoggedIn, (req, res) => {
-// ;
-// });
+router.post("/startGame", (req, res) => {
+  socketManager.startGame(req.body.gameId);
+});
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

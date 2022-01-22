@@ -25,6 +25,13 @@ const removeUser = (user, socket) => {
   delete socketToUserMap[socket.id];
 };
 
+const startGame = (gameId) => {
+  //start the game
+  setTimeout(() => {
+    // socket emit to people in this game
+  }, 1000 / 10);
+};
+
 module.exports = {
   init: (http) => {
     io = require("socket.io")(http);
@@ -40,6 +47,7 @@ module.exports = {
 
   addUser: addUser,
   removeUser: removeUser,
+  startGame: startGame,
 
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,
