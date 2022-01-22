@@ -11,4 +11,16 @@
 
 .Card-title {
     font-weight: bold;
+    font-size: 20px;
+    margin: 10px;
+}
+
+.Card-authors {
+    font-weight: lighter;
+    margin: 10px;
+}
+
+.Card-content {
+    font-weight: lighter;
+    margin: 10px;
 }

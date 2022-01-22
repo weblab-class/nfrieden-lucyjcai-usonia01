@@ -76,6 +76,15 @@ router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.post("/set-title", auth.ensureLoggedIn, (req, res) => {
+  console.log("at least set-title is running");
+  console.log(req.body.code, req.body.title);
+  GameStory.findOne({ code: req.body.code }).then((story) => {
+    story.title = req.body.title;
+    story.save();
+  })
+});
+
 router.post("/vote-to-end", auth.ensureLoggedIn, (req, res) => {
   User.findOne({ _id: req.user._id }).then((user) => {
     user.voteEnd = true;
@@ -117,7 +126,7 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
 });
 
 // router to getting all ids people who contributed to a story
-router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
+router.get("/contributors", (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
     const authors = story.author_ids;
     console.log("this is the authors:", authors);

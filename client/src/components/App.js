@@ -59,7 +59,7 @@ const App = () => {
           {/* <ViewStory path="/ViewStory/:storyId" /> */}
           <HomePage path="/" />
           <ActiveStory path="/active-story" />
-          <SubmittedPage path="/SubmittedPage" />
+          <SubmittedPage path="/SubmittedPage/:code" />
           <NotFound default />
         </Router>
       </div>

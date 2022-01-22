@@ -67,9 +67,7 @@ const GamePage = (props) => {
       console.log("numberOfVotes: ", numberOfVotes);
       if (numberOfVotes > votes.length/2) {
         console.log("hehe vote passed");
-        post("/api/post-story", { code: props.code }).then((story) => {
-          console.log(story.active);
-        });
+        post("/api/post-story", { code: props.code }).then(window.location.href = `/SubmittedPage/${props.code}`);
       }
     });
   };

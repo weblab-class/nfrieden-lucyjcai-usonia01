@@ -1,15 +1,27 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import { get, post } from "../../utilities";
 import "./Card.css";
 
 const Card = (props) => {
+  const [authors, setAuthors] = useState([]);
+
+  useEffect(() => {
+    get("/api/contributors", {code: props.code}).then((contributors) => {
+      setAuthors(contributors);
+    })
+  }, []);
   
     return (
       <>
         <div className="Card-container">
           <div className="Card-title">
-            Story id: {props.storyId} | contributers: | date created: 
+            {props.title}
           </div>
-          <span>{props.content}</span>
+          <div className="Card-authors">
+            by {authors}
+          </div>
+          <br></br>
+          <div className="Card-content">{props.content}</div>
           {/* <Link to="/ViewStory/{storyId}"> */}
             {/* <button> view story </button> */}
           {/* </Link> */}
