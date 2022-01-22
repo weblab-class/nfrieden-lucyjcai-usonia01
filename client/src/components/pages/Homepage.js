@@ -32,21 +32,30 @@ const HomePage = () => {
     <div className="Homepage-title">
       Welcome to StoryCollab!
     </div>
-    <div className="Homepage-instructionstitle">
-      instructions
-    </div>
-    {/* <div className="Homepage-instructions">
-      these are the instructions
-    </div> */}
-    <div className="Homepage-feedtitle">
-      feed
-    </div>
-    <div className="Homepage-feed">
-      <div className="Homepage-storiescontent">
-        {storiesList}
+    <div style={{ flexDirection: "row", display: "flex"}}>
+      {/* Row for Feed */}
+      <div className="Homepage-feed" style={{flex: 0.5}}>
+        <div className="Homepage-feedtitle">
+          Feed
+        </div>
+        <div className="Homepage-storiescontent">
+          {storiesList}
+        </div>
       </div>
-    </div>
 
+      {/* Row for Instructions */}
+      <div style={{flex: 0.5}}>
+        <div className="Homepage-instructionstitle">
+          Instructions
+        </div>
+        <ul class="instructions-list">
+          <li>Instruction #1. This is what happens when the instruction wraps around.</li>
+          <li>Instruction #2</li>
+          <li>Instruction #3</li>
+        </ul>
+      </div>
+      
+    </div>
     </>
   );
 };

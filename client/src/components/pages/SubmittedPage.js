@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import { Link, Router } from "@reach/router";
 import "./SubmittedPage.css";
 import { get, post } from "../../utilities";
 
@@ -26,25 +27,21 @@ const SubmittedPage = (props) => {
       <div className="SubmittedPage-subtitle">
         Now, a pick a name for it:
       </div>
-      <div className="SubmittedPage-form">
-        <form onSubmit={handleSubmit}>
+      <div>
+        <form className="SubmittedPage-form" onSubmit={handleSubmit}>
           <input
             type="text"
             onChange={onChange}
             className="Code-Box"
             placeholder="Story title"
             value={title}
-          ></input>
-          <div className="Code-submit">
-            <button>Submit!</button>
-          </div>
+          ></input> 
+          <button className="Code-submit">Submit!</button>
           <div className="conclusion">
             Once you're done, head over to the 
             <br></br>Homepage to view your story!
           </div>
         </form>
-        <div>
-        </div>
       </div>
       </>
     );
