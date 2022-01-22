@@ -18,7 +18,7 @@ const NavBar = (props) => {
           <i className="fas fa-plus-square"></i>
         </a>
 
-        <a href="/MyStories" className="NavBar-link">
+        <a href="/active-story" className="NavBar-link">
           <i className="fas fa-book"></i>
         </a>
         <a href="/" className="NavBar-link">

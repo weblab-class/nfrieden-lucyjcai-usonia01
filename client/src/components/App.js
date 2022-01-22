@@ -11,7 +11,7 @@ import Join from "./pages/JoinAuth";
 import WaitingRoom from "./pages/WaitingRoom.js";
 import SubmittedPage from "./pages/SubmittedPage.js";
 import ViewStory from "./pages/ViewStory.js";
-import MyStory from "./pages/Mystories.js";
+// import MyStory from "./pages/Mystories.js";
 
 import "../utilities.css";
 
@@ -59,7 +59,6 @@ const App = () => {
           <GamePage path="/gamepage/:code" />
           {/* <ViewStory path="/ViewStory/:storyId" /> */}
           <HomePage path="/" />
-          <MyStory path="/MyStories" />
 
           <ActiveStory path="/active-story" />
           <SubmittedPage path="/SubmittedPage/:code" />
