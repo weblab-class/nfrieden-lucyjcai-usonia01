@@ -16,6 +16,7 @@ const SubmittedPage = (props) => {
       console.log("yay this worked! :)) story title is ", title));
     event.preventDefault();
     setTitle("");
+    window.location.href = `/`;
   };
 
     return (

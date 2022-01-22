@@ -165,14 +165,16 @@ router.get("/Mystories", auth.ensureLoggedIn, (req, res) => {
 });
 
 router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
-  let myStories = [];
-  GameStory.findOne({active: false}).then((story) => {
-    console.log("story author ids are: ", story.author_ids);
-    console.log("req user id is: ", req.user._id);
-    if (story.author_ids.includes(req.user._id)) {
-      myStories.push(story);
-    } 
-    res.send(myStories);
+  let activeStories = [];
+  GameStory.find({active: false}).then((stories) => {
+
+    for (let i=0; i<stories.length; i++) {
+      if (stories[i].author_ids.includes(req.user._id)) {
+        activeStories.push(stories[i]);
+      } 
+    }
+    console.log("activeStories: ", activeStories);
+    res.send(activeStories);
   });
 });
 
