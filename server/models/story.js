@@ -9,6 +9,7 @@ const GameStorySchema = new mongoose.Schema({
   active: Boolean,
   code: String,
   title: String,
+  likes: Number,
 });
 
 // create and export a story model
