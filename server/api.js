@@ -157,30 +157,27 @@ router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
 });
 
 // Suggestion?
-router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
-  GameStory.find({ active: false }).then((stories) => {
-    const Toreturn = stories.filter((story) => {
-      story.author_ids.includes(req.user._id);
-    });
-    res.send(Toreturn);
-  });
-});
-
-// previous code
 // router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
-//   let myStories = [];
-//   GameStory.find({ active: false }).then((story) => {
-//     console.log("foundstory:", story);
-//     if (story) {
-//       console.log("in here");
-//       if (story.author_ids.includes(req.user._id)) {
-//         myStories.push(story);
-//       }
-//     }
-
-//     res.send(myStories);
+//   GameStory.find({ active: false }).then((stories) => {
+//     const Toreturn = stories.filter((story) => {
+//       story.author_ids.includes(req.user._id);
+//     });
+//     res.send(Toreturn);
 //   });
 // });
+
+router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
+  let activeStories = [];
+  GameStory.find({ active: false }).then((stories) => {
+    for (let i = 0; i < stories.length; i++) {
+      if (stories[i].author_ids.includes(req.user._id)) {
+        activeStories.push(stories[i]);
+      }
+    }
+    console.log("activeStories: ", activeStories);
+    res.send(activeStories);
+  });
+});
 
 // get current story
 

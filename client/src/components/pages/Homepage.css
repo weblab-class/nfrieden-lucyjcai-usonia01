@@ -6,28 +6,30 @@
   justify-content: center;
 }
 
-.Homepage-instructions {
-  position: relative;
-  left: 75%;
-  display: flex;
-}
-
-/* .Homepage-storiescontent {
-    padding: 20px;
-} */
-
 .Homepage-feed {
   display: flex;
-  width: 50%;
   flex-direction: column;
 }
 
 .Homepage-feedtitle {
-  position: relative;
-  left: 25%;
+  color: rgba(212, 163, 115, 1);
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .Homepage-instructionstitle {
-  position: relative;
-  left: 75%;
+  color: rgba(212, 163, 115, 1);
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.instructions-list {
+  list-style-type: square;
+  margin: 30px 50px 0px 100px;
+}
+
+li:not(:last-child) {
+  margin-bottom: 10px;
 }

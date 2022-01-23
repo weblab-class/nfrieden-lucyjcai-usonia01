@@ -34,13 +34,29 @@ const HomePage = () => {
   return (
     <>
       <div className="Homepage-title">Welcome to StoryCollab!</div>
-      <div className="Homepage-instructionstitle">instructions</div>
-      {/* <div className="Homepage-instructions">
-      these are the instructions
-    </div> */}
-      <div className="Homepage-feedtitle">feed</div>
-      <div className="Homepage-feed">
-        <div className="Homepage-storiescontent">{storiesList}</div>
+      <div style={{ flexDirection: "row", display: "flex" }}>
+        {/* Row for Feed */}
+        <div className="Homepage-feed" style={{ flex: 0.5 }}>
+          <div className="Homepage-feedtitle">Feed</div>
+          <div className="Homepage-storiescontent">{storiesList}</div>
+        </div>
+
+        {/* Row for Instructions */}
+        <div style={{ flex: 0.5 }}>
+          <div className="Homepage-instructionstitle">Instructions</div>
+          <ul class="instructions-list">
+            <li>
+              Head over to the <i className="fas fa-plus-square"></i> tab to start a new story, and
+              use the game code to invite your friends. Each person submits a sentence on their
+              turn. Once you're done, vote to end the story, set a title for it, and you're done!
+            </li>
+            <li>To the left, view a feed of all stories on this website.</li>
+            <li>
+              In the <i className="fas fa-book"></i> tab, view the list of stories you have
+              contributed to.
+            </li>
+          </ul>
+        </div>
       </div>
     </>
   );

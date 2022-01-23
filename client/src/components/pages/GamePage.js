@@ -170,12 +170,12 @@ const GamePage = (props) => {
                 <div style={{ fontWeight: "bold", marginBottom: 5, fontSize: "20px" }}>
                   vote to end game:
                   {endGameVote ? (
-                    <button className="checkmark" onClick={voteOnGameState}>
-                      <i class="fas fa-check-square fa-3x"></i>
+                    <button className="xmark" onClick={voteOnGameState}>
+                      <i class="fas fa-times-circle fa-3x"></i>
                     </button>
                   ) : (
-                    <button className="xmark" onClick={postStory}>
-                      <i class="fas fa-times-circle fa-3x"></i>
+                    <button className="checkmark" onClick={postStory}>
+                      <i class="fas fa-check-square fa-3x"></i>
                     </button>
                   )}
                 </div>
@@ -227,7 +227,6 @@ const GamePage = (props) => {
                 type="button"
                 value="Add!"
                 onClick={addNewSentence}
-                // disabled
               ></input>
             </div>
             <div style={{ padding: 24, flex: 0.3 }}>

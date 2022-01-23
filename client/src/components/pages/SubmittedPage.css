@@ -1,25 +1,47 @@
 .SubmittedPage-title {
-    font-weight: bold;
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-    margin: 20px;
+  font-weight: bold;
+  font-size: 30px;
+  display: flex;
+  justify-content: center;
+  margin: 20px;
 }
 
 .SubmittedPage-subtitle {
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    margin: 20px;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  margin: 20px;
 }
 
 .SubmittedPage-form {
-    display: block;
-    text-align: center;
-    border: none;
-  }
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  border: none;
+}
+
+.Code-submit {
+  border-style: solid;
+  border-width: 2px;
+  border-color: darkgray;
+  border-radius: 10px;
+
+  background-color: rgba(212, 163, 115, 1);
+  color: #fff;
+  font-size: 15px;
+
+  margin: 10px;
+  height: 40px;
+  width: 100px;
+}
+
+.Code-submit:hover {
+  background-color: rgb(197, 121, 45);
+  transition: all 0.2s;
+  cursor: pointer;
+}
 
 .conclusion {
-    position: relative;
-    top: 30px;
+  position: relative;
+  top: 30px;
 }
