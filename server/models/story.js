@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const GameStorySchema = new mongoose.Schema({
   author_ids: Array,
   content: String,
+  author_names: Array,
   // date_created: String,
   active: Boolean,
   code: String,

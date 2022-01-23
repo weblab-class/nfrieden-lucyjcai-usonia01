@@ -3,6 +3,7 @@ import "./GamePage.css";
 import StorySentence from "./StorySentence";
 import Contributors from "./Contributors";
 import { get, post } from "../../utilities";
+import { socket } from "../../client-socket.js";
 import { Link, Router } from "@reach/router";
 
 const GamePage = (props) => {
@@ -12,8 +13,9 @@ const GamePage = (props) => {
   // const [storyId, setStoryId] = useState(undefined);
   const [existing, setExisting] = useState(false);
   const [endGameVote, setEndGameVote] = useState(false);
-
+  const [writerId, setWriterId] = useState(undefined);
   const [userArray, setUserArray] = useState([]);
+  const [userId, setUserId] = useState(undefined);
 
   const CharCount = (event) => {
     setInputText(event.target.value);
@@ -25,11 +27,17 @@ const GamePage = (props) => {
   const addNewSentence = () => {
     const updatedSentences = [...sentences, inputText];
     setSentences(updatedSentences);
+    console.log("sentences:", updatedSentences);
     post("/api/Update-story", { code: props.code, content: updatedSentences.join(" ") });
     setInputText("");
     setCount(0);
 
     // index for bolding different people's names
+  };
+
+  const Updatewriter = (data) => {
+    console.log("writer:", data);
+    setWriterId(data);
   };
 
   const voteOnGameState = () => {
@@ -67,22 +75,64 @@ const GamePage = (props) => {
   const enableTurn = () => {
     document.getElementById("submitButton").disabled = false;
   };
+
+  const Updatecontent = (data) => {
+    setSentences([data]);
+    console.log("updatecontent:", data);
+    console.log("here I am ");
+  };
+
+  const Updatecontributors = (data) => {
+    console.log("in contributors:", data);
+    setUserArray(data);
+  };
+
+  // console.log("content_sofar:", sentences.join(""));
+
+  // NEW
+  get("/api/whoami").then((user) => {
+    console.log("making the api call");
+    console.log(user._id);
+    if (user._id) {
+      // they are registed in the database, and currently logged in.
+      setUserId(user._id);
+      console.log("user_id:", userId);
+    }
+  });
+
+  socket.on("writer", Updatewriter);
+  useEffect(() => {
+    socket.on("content", Updatecontent);
+    socket.on("contributors", Updatecontributors);
+    // socket.on("writer", Updatewriter);
+  }, [sentences]);
+
+  /// OLD
   // story so far
+  // useEffect(() => {
+  //   get("/api/search", { code: props.code }).then((res) => {
+  //     if (!res.length == 0) {
+  //       socket.on("content", Updatecontent);
+  //       socket.on("contributors", Updatecontributors);
+  //     } else {
+  //       post("/api/new_story", { code: props.code, content: "" }).then(() => {
+  //         // socket.on("contributors", Updatecontributors);
+  //         socket.on("contributors", Updatecontributors);
+  //       });
+  //     }
+  //   });
+  // }, []);
+
   useEffect(() => {
     let stories = [];
     // console.log(props.code);
     get("/api/search", { code: props.code }).then((res) => {
-      // console.log("checking if search successful");
-      // console.log(res);
       if (!res.length == 0) {
-        // console.log("story content ...");
-        // console.log(res.content);
-        // console.log("<<>>");
         stories.push(res[0].content);
-        // setExisting(true);
-
-        get("/api/contributors", { code: props.code }).then((result) => {
-          setUserArray(result);
+        post("/api/Update-story", { code: props.code, content: res[0].content }).then(() => {
+          get("/api/contributors", { code: props.code }).then((result) => {
+            setUserArray(result);
+          });
         });
       } else {
         post("/api/new_story", { code: props.code, content: "" }).then(() => {
@@ -92,7 +142,6 @@ const GamePage = (props) => {
         });
       }
       setSentences(stories);
-      // console.log(existing);
     });
   }, []);
 
@@ -102,11 +151,11 @@ const GamePage = (props) => {
         <div style={{ flexDirection: "row", display: "flex" }}>
           {/* This function defines the additive text space*/}
           <div className="item test" style={{ flex: 0.7 }}>
-            {sentences.length > 0
-              ? sentences.map((sentences, index) => (
-                  <StorySentence key={index * 2465343} content={sentences} />
-                ))
-              : "Your changing story will appear here..."}
+            {sentences.length > 0 ? (
+              <StorySentence content={sentences} />
+            ) : (
+              "Your changing story will appear here..."
+            )}
           </div>
 
           {/* This function is very messy but it makes the dots on the side */}
@@ -114,7 +163,7 @@ const GamePage = (props) => {
             <div style={{ flexDirection: "column", display: "flex", height: "100%" }}>
               {/* Contributors Bar*/}
               {console.log(`user arr: ${userArray}`)}
-              <Contributors userArray={userArray} />
+              <Contributors userArray={userArray} writerId={writerId} />
 
               {/* Vote to end game */}
               <div style={{ flex: 0.2 }}>
@@ -143,14 +192,30 @@ const GamePage = (props) => {
         <div style={{ flexDirection: "row", display: "flex" }}>
           <div className="Add" style={{ flex: 0.7 }}>
             {/* For the text inserter*/}
+
             <div className="my-text">
-              <textarea
-                className="item Text-space"
-                onChange={CharCount}
-                placeholder="Type your sentence..."
-                maxLength="300"
-                value={inputText}
-              ></textarea>
+              {userId == writerId ? (
+                <textarea
+                  className="item Text-space"
+                  id="keyTextBox"
+                  onChange={CharCount}
+                  placeholder="Type your sentence..."
+                  maxLength="300"
+                  value={inputText}
+                ></textarea>
+              ) : (
+                <textarea
+                  // disabled
+                  className="item Text-space"
+                  id="keyTextBox"
+                  onChange={CharCount}
+                  placeholder="Type your sentence..."
+                  maxLength="300"
+                  value={inputText}
+                ></textarea>
+              )}
+
+              {/* conditions to be met for the textarea to be editable */}
               <span className="Text-space_count"> {count}/300 (Max Characters)</span>
             </div>
 

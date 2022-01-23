@@ -1,26 +1,38 @@
 import React, { useState, useEffect } from "react";
 import "./GamePage.css";
+import { socket } from "../../client-socket";
+const Contributors = (props) => {
+  // const [writerId, setWriterId] = useState(undefined);
+  const [idToNameDict, setIdToNameDict] = useState({});
 
-const Contributors = ({ userArray }) => {
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  // const Updatewriter = (data) => {
+  //   console.log("writer:", data);
+  //   setWriterId(data);
+  // };
 
-  // if (!userArray.length === 0) {
-  //   setSelectedIndex((selectedIndex + 1) % userArray.length);
-  // }
+  const UpdateDictionary = (data) => {
+    console.log("in dictionary:", data);
+    setIdToNameDict(data);
+  };
 
   useEffect(() => {
-    setTimeout(() => {
-      if (userArray.length !== 0) {
-        setSelectedIndex((selectedIndex + 1) % userArray.length);
-      }
-    }, 6000);
-    // find a way to communicate to everyone what the new selectedIndex is
-  }, [selectedIndex, userArray]);
+    // socket.on("writer", Updatewriter);
+    socket.on("IdToName", UpdateDictionary);
+  }, []);
+
+  //   useEffect(() => {
+  //     setTimeout(() => {
+  //       if (userArray.length !== 0) {
+  //         setSelectedIndex((selectedIndex + 1) % userArray.length);
+  //       }
+  //     }, 6000);
+  //     // find a way to communicate to everyone what the new selectedIndex is
+  //   }, [selectedIndex, userArray]);
 
   return (
     <div style={{ flex: 0.8 }}>
       <div style={{ fontWeight: "bold", marginBottom: 5, fontSize: "25px" }}>Contributors</div>
-      {userArray.map((user, i) => (
+      {props.userArray.map((user, i) => (
         <div style={{ width: "100%", padding: 10, display: "flex", alignItems: "center" }}>
           <span
             style={{
@@ -34,7 +46,7 @@ const Contributors = ({ userArray }) => {
           ></span>
 
           {/* function below controls which name is bolded */}
-          {i == selectedIndex ? (
+          {user == idToNameDict[props.writerId] ? (
             <span style={{ fontWeight: 700, marginLeft: 10 }}>{user}</span>
           ) : (
             <span style={{ fontWeight: 500, marginLeft: 10 }}>{user}</span>

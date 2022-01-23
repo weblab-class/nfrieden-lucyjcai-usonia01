@@ -35,6 +35,25 @@ const Name = async (id) => {
   return user.name;
 };
 
+// const DictConst = (ids, names) => {
+//   const IdtoUsername = {};
+//   const n_players = ids.length;
+//   for (let i = 0; i < n_players; i++) {
+//     IdtoUsername[ids[i]] = names[i];
+//   }
+//   return IdtoUsername;
+// };
+
+// const Writer = (ids) => {
+//   let counter = 0;
+//   let writer = ids[counter];
+//   setTimeout(() => {
+//     counter = (counter + 1) % ids.length;
+//     writer = ids[counter];
+//     return writer;
+//   }, 60000);
+// };
+
 router.post("/login", auth.login);
 router.post("/logout", auth.logout);
 router.get("/whoami", (req, res) => {
@@ -83,12 +102,19 @@ router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
 // update existing story
 
 router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
+  console.log("updating story....");
   GameStory.findOne({ code: req.body.code }).then((story) => {
     if (!story.author_ids.includes(req.user._id)) {
       story.author_ids.push(req.user._id);
+      story.author_names.push(req.user.name);
     }
     story.content = req.body.content;
     story.save();
+
+    socketManager.Game(story);
+    // socketManager.getIo().emit("content", story.content);
+    // socketManager.getIo().emit("contributors", story.author_ids);
+    // socketManager.getIo().emit("Writer", Writer(story.author_ids));
   });
 });
 
@@ -104,26 +130,29 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
   console.log("this is user-id:", req.user._id);
   const newStory = GameStory({
     author_ids: [req.user._id],
+    author_names: [req.user.name],
     content: req.body.content,
     active: true,
     code: req.body.code,
   });
 
   newStory.save().then((story) => res.send(newStory));
+  // newStory.save();
+  socketManager.Game(newStory);
+  // socketManager.getIo().emit("New_Story", newStory);
 });
 
 // router to getting all ids people who contributed to a story
 router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
-    const authors = story.author_ids;
-    // console.log("this is the authors:", authors);
-    const Toreturn = authors.map((id) => Name(id));
-    // console.log("before:", Toreturn);
+    // const authors = story.author_ids;
+    const Toreturn = story.author_names;
+
+    // const Toreturn = authors.map((id) => Name(id));
+
     Promise.all(Toreturn).then((result) => {
-      // console.log("toreturn:", Toreturn);
       res.send(result);
     });
-    // res.send(Toreturn);
   });
 });
 
@@ -165,10 +194,13 @@ router.get("/CurrentStory", auth.ensureLoggedIn, (req, res) => {
     return res.send({});
   }
 });
+// Socket stuff
 
-router.post("/startGame", (req, res) => {
-  socketManager.startGame(req.body.gameId);
-});
+// Socket related API
+// router.post("/startGame", (req, res) => {
+//   // find the story
+//   socketManager.startGame(req.body._id);
+// });
 
 // anything else falls to this "not found" case
 router.all("*", (req, res) => {

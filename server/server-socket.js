@@ -2,6 +2,8 @@ let io;
 
 const userToSocketMap = {}; // maps user ID to socket object
 const socketToUserMap = {}; // maps socket ID to user object
+// maps users to their ID
+let counter = 0;
 
 const getSocketFromUserID = (userid) => userToSocketMap[userid];
 const getUserFromSocketID = (socketid) => socketToUserMap[socketid];
@@ -25,11 +27,37 @@ const removeUser = (user, socket) => {
   delete socketToUserMap[socket.id];
 };
 
-const startGame = (gameId) => {
-  //start the game
+// Socket logic
+
+const Game = (story) => {
+  // const mygame = {};
+  console.log("mygame:", story);
+  const IdtoUsername = {};
+  // let counter = 0;
+  const player_ids = story.author_ids;
+  const n_players = story.author_ids.length;
+
+  for (let i = 0; i < n_players; i++) {
+    IdtoUsername[player_ids[i]] = story.author_names[i];
+  }
+
+  let writer = story.author_ids[counter];
+
   setTimeout(() => {
     // socket emit to people in this game
+    io.emit("content", story.content);
+    io.emit("contributors", story.author_names);
+    io.emit("IdToName", IdtoUsername);
+    io.emit("writer", writer);
   }, 1000 / 10);
+
+  setTimeout(() => {
+    counter = (counter + 1) % player_ids.length;
+    writer = story.author_ids[counter];
+
+    // io.emit("writer", writer);
+    // emit the writer
+  }, 6000);
 };
 
 module.exports = {
@@ -47,7 +75,7 @@ module.exports = {
 
   addUser: addUser,
   removeUser: removeUser,
-  startGame: startGame,
+  Game: Game,
 
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,
