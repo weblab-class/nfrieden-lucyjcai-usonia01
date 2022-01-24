@@ -5,20 +5,28 @@ import "./Card.css";
 const Card = (props) => {
   const [authors, setAuthors] = useState([]);
   const[likes, setLikes] = useState(0);
+  const[liked, setLiked] = useState(false);
 
-  const addLike = () => {
-    console.log("added a like");
-    // post("/api/post-likes", {code: props.code});
-    console.log(likes);
-  }
+
+  const likePost = () => {
+    setLiked(true);
+    post("/api/post-likes", {code: props.code});
+  };
+
+  const dislikePost = () => {
+    setLiked(false);
+    post("/api/withdraw-likes", {code: props.code});
+  };
 
   useEffect(() => {
-    get("/api/contributors", {code: props.code}).then((contributors) => {
-      setAuthors(contributors);
+    get("/api/contributors-list", {code: props.code}).then((contributors) => {
+      setAuthors(contributors)
     })
-    // get("/api/get-likes", {code: props.code}).then((res) => {
-    //   setLikes(res.likes);
-    // })
+    get("/api/get-likes", {code: props.code}).then((res) => {
+      let likess = parseInt(res);
+      console.log("here are the types of likess: ", typeof(likess));
+      setLikes(likess);
+    });
   }, []);
   
     return (
@@ -26,9 +34,15 @@ const Card = (props) => {
         <div className="Card-container">
           <div className="Card-title">
             {props.title}
-            <button className="Card-heart" onClick={addLike}>
-              {likes} <i class="far fa-heart"></i>
-            </button>
+            {liked ? (
+              <button className="Card-xmark" onClick={dislikePost}>
+                {likes} <i className="fas fa-heart"></i>
+              </button>
+            ) : (
+              <button className="Card-checkmark" onClick={likePost}>
+                {likes} <i className="far fa-heart"></i>
+              </button>
+            )}
           </div>
           <div className="Card-authors">
             by {authors}

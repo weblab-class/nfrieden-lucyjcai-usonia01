@@ -44,7 +44,7 @@ const HomePage = () => {
         {/* Row for Instructions */}
         <div style={{ flex: 0.5 }}>
           <div className="Homepage-instructionstitle">Instructions</div>
-          <ul class="instructions-list">
+          <ul className="instructions-list">
             <li>
               Head over to the <i className="fas fa-plus-square"></i> tab to start a new story, and
               use the game code to invite your friends. Each person submits a sentence on their

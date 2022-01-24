@@ -30,8 +30,8 @@ const story = require("./models/story");
 
 const Name = async (id) => {
   const user = await User.findOne({ _id: id });
-  console.log("Usersname: ", user);
-  console.log(user.name);
+  // console.log("Usersname: ", user);
+  // console.log(user.name);
   return user.name;
 };
 
@@ -99,6 +99,20 @@ router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
   });
 });
 
+router.post("/post-likes", auth.ensureLoggedIn, (req, res) => {
+  GameStory.findOne({ code: req.body.code }).then((story) => {
+    story.likes = story.likes + 1;
+    story.save();
+  });
+});
+
+router.post("/withdraw-likes", auth.ensureLoggedIn, (req, res) => {
+  GameStory.findOne({ code: req.body.code }).then((story) => {
+    story.likes = story.likes - 1;
+    story.save();
+  });
+});
+
 // update existing story
 
 router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
@@ -123,6 +137,15 @@ router.get("/search", auth.ensureLoggedIn, (req, res) => {
   GameStory.find({ code: req.query.code }).then((story) => res.send(story));
 });
 
+router.get("/get-likes", (req, res) => {
+  GameStory.findOne({ code: req.query.code }).then((story) => {
+    let hearts = story.likes.toString();
+    console.log(hearts);
+    console.log(typeof(hearts));
+    res.send(hearts);
+  });
+});
+
 //creating new story
 
 router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
@@ -134,6 +157,7 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
     content: req.body.content,
     active: true,
     code: req.body.code,
+    likes: 0,
   });
 
   newStory.save().then((story) => res.send(newStory));
@@ -150,6 +174,16 @@ router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
 
     // const Toreturn = authors.map((id) => Name(id));
 
+    Promise.all(Toreturn).then((result) => {
+      res.send(result);
+    });
+  });
+});
+
+router.get("/contributors-list", (req, res) => {
+  GameStory.findOne({ code: req.query.code }).then((story) => {
+    const authors = story.author_ids;
+    const Toreturn = authors.map((id) => Name(id));
     Promise.all(Toreturn).then((result) => {
       res.send(result);
     });
@@ -174,7 +208,6 @@ router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
         activeStories.push(stories[i]);
       }
     }
-    console.log("activeStories: ", activeStories);
     res.send(activeStories);
   });
 });

@@ -31,3 +31,19 @@
     border: transparent;
     background-color: transparent;
 }
+
+.Card-checkmark {
+    border: transparent;
+    background-color: transparent;
+    /* margin: 10px; */
+  }
+
+  .Card-xmark {
+    border: transparent;
+    background-color: transparent;
+    color: red;
+  }
+
+  .Card-likes {
+      color: black,
+  }
