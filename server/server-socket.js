@@ -30,10 +30,9 @@ const removeUser = (user, socket) => {
 // Socket logic
 
 const Game = (story) => {
-  // const mygame = {};
   console.log("mygame:", story);
   const IdtoUsername = {};
-  // let counter = 0;
+
   const player_ids = story.author_ids;
   const n_players = story.author_ids.length;
 
@@ -48,16 +47,16 @@ const Game = (story) => {
     io.emit("content", story.content);
     io.emit("contributors", story.author_names);
     io.emit("IdToName", IdtoUsername);
-    io.emit("writer", writer);
+    // io.emit("writer", writer);
   }, 1000 / 10);
 
   setTimeout(() => {
     counter = (counter + 1) % player_ids.length;
     writer = story.author_ids[counter];
 
-    // io.emit("writer", writer);
+    io.emit("writer", writer);
     // emit the writer
-  }, 6000);
+  }, 30000);
 };
 
 module.exports = {

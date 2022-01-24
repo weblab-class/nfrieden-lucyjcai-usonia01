@@ -10,7 +10,7 @@ const GamePage = (props) => {
   const [count, setCount] = useState(0);
   const [sentences, setSentences] = useState([]);
   const [inputText, setInputText] = useState("");
-  // const [storyId, setStoryId] = useState(undefined);
+
   const [existing, setExisting] = useState(false);
   const [endGameVote, setEndGameVote] = useState(false);
   const [writerId, setWriterId] = useState(undefined);
@@ -27,7 +27,7 @@ const GamePage = (props) => {
   const addNewSentence = () => {
     const updatedSentences = [...sentences, inputText];
     setSentences(updatedSentences);
-    console.log("sentences:", updatedSentences);
+
     post("/api/Update-story", { code: props.code, content: updatedSentences.join(" ") });
     setInputText("");
     setCount(0);
@@ -205,7 +205,7 @@ const GamePage = (props) => {
                 ></textarea>
               ) : (
                 <textarea
-                  // disabled
+                  disabled
                   className="item Text-space"
                   id="keyTextBox"
                   onChange={CharCount}
