@@ -55,7 +55,7 @@ const GamePage = (props) => {
       console.log("user has voted to end! these are the contributors: ", userArray)
     );
     get("/api/voters", { code: props.code }).then((votes) => {
-      console.log("these are contributors:", votes);
+      // console.log("these are contributors:", votes);
       let numberOfVotes = 0;
       for (let i = 0; i < votes.length; i++) {
         if (votes[i] === true) {
@@ -64,7 +64,7 @@ const GamePage = (props) => {
       }
       console.log("numberOfVotes: ", numberOfVotes);
       if (numberOfVotes > votes.length / 2) {
-        console.log("hehe vote passed");
+        // console.log("hehe vote passed");
         post("/api/post-story", { code: props.code }).then(
           (window.location.href = `/SubmittedPage/${props.code}`)
         );
@@ -78,7 +78,7 @@ const GamePage = (props) => {
 
   const Updatecontent = (data) => {
     setSentences([data]);
-    console.log("updatecontent:", data);
+    // console.log("updatecontent:", data);
     console.log("here I am ");
   };
 
@@ -91,8 +91,8 @@ const GamePage = (props) => {
 
   // NEW
   get("/api/whoami").then((user) => {
-    console.log("making the api call");
-    console.log(user._id);
+    // console.log("making the api call");
+    // console.log(user._id);
     if (user._id) {
       // they are registed in the database, and currently logged in.
       setUserId(user._id);
@@ -100,7 +100,22 @@ const GamePage = (props) => {
     }
   });
 
-  socket.on("writer", Updatewriter);
+  // useEffect(() => {
+  //   post("/api/writer", { code: props.code }).then(socket.on("writer", Updatewriter));
+  // }, []);
+
+  // useEffect(() => {
+  //   get("/api/search", { code: props.code }).then((story) => {
+  //     if (story.length !== 0) {
+  //       post("/api/writer", { code: props.code }).then(socket.on("writer", Updatewriter));
+  //     }
+  //   });
+  // }, []);
+
+  useEffect(() => {
+    post("/api/writer", { code: props.code }).then(socket.on("writer", Updatewriter));
+  }, []);
+
   useEffect(() => {
     socket.on("content", Updatecontent);
     socket.on("contributors", Updatecontributors);

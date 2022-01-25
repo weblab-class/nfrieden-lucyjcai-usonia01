@@ -82,6 +82,14 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
+router.post("/writer", (req, res) => {
+  console.log("creating is not issue");
+  GameStory.findOne({ code: req.body.code }).then((story) => {
+    if (story) {
+      socketManager.Write(story);
+    }
+  });
+});
 // Change 2: router for the home page/stories page
 // TODO: Style this such that the display is based on the status of the story
 router.get("/stories", (req, res) => {
@@ -141,7 +149,7 @@ router.get("/get-likes", (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
     let hearts = story.likes.toString();
     console.log(hearts);
-    console.log(typeof(hearts));
+    console.log(typeof hearts);
     res.send(hearts);
   });
 });

@@ -4,6 +4,7 @@ const userToSocketMap = {}; // maps user ID to socket object
 const socketToUserMap = {}; // maps socket ID to user object
 // maps users to their ID
 let counter = 0;
+// let ticks = 0;
 
 const getSocketFromUserID = (userid) => userToSocketMap[userid];
 const getUserFromSocketID = (socketid) => socketToUserMap[socketid];
@@ -40,7 +41,7 @@ const Game = (story) => {
     IdtoUsername[player_ids[i]] = story.author_names[i];
   }
 
-  let writer = story.author_ids[counter];
+  // let writer = story.author_ids[counter];
 
   setTimeout(() => {
     // socket emit to people in this game
@@ -50,13 +51,30 @@ const Game = (story) => {
     // io.emit("writer", writer);
   }, 1000 / 10);
 
-  setTimeout(() => {
-    counter = (counter + 1) % player_ids.length;
-    writer = story.author_ids[counter];
+  // setTimeout(() => {
+  //   counter = (counter + 1) % player_ids.length;
+  //   // console.log("counter:", counter);
+  //   writer = story.author_ids[counter];
 
+  //   //   // io.emit("writer", writer);
+  //   //   // emit the writer
+  // }, 10000);
+};
+
+const Write = (story) => {
+  let writer = story.author_ids[counter];
+  let ticks = 0;
+  setInterval(() => {
     io.emit("writer", writer);
-    // emit the writer
-  }, 30000);
+
+    if (ticks % 10 === 0) {
+      counter = (counter + 1) % story.author_ids.length;
+
+      writer = story.author_ids[counter];
+    }
+
+    ticks += 1;
+  }, 10000);
 };
 
 module.exports = {
@@ -75,6 +93,7 @@ module.exports = {
   addUser: addUser,
   removeUser: removeUser,
   Game: Game,
+  Write: Write,
 
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,
