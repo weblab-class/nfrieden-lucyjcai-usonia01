@@ -46,13 +46,13 @@ const HomePage = () => {
           <div className="Homepage-instructionstitle">Instructions</div>
           <ul className="instructions-list">
             <li>
-              Head over to the <i className="fas fa-plus-square"></i> tab to start a new story, and
+              Head over to the <span className="instruction-icons"><i class="fas fa-plus-square"></i></span> tab to start a new story, and
               use the game code to invite your friends. Each person submits a sentence on their
               turn. Once you're done, vote to end the story, set a title for it, and you're done!
             </li>
             <li>To the left, view a feed of all stories on this website.</li>
             <li>
-              In the <i className="fas fa-book"></i> tab, view the list of stories you have
+              In the <span className="instruction-icons"><i class="fas fa-book"></i></span> tab, view the list of stories you have
               contributed to.
             </li>
           </ul>
