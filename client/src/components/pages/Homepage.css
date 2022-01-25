@@ -28,8 +28,13 @@
 .instructions-list {
   list-style-type: square;
   margin: 30px 50px 0px 100px;
+  font-size: 20px;
 }
 
 li:not(:last-child) {
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.instruction-icons {
+  color: rgba(212, 163, 115, 1);
 }
