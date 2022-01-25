@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, Router } from "@reach/router";
 import GamePage from "../pages/GamePage";
-import "./joinAuth.css";
+import "./JoinAuth.css";
 import { get, post } from "../../utilities";
 
 const Join = () => {
@@ -25,20 +25,18 @@ const Join = () => {
 
   return (
     <div className="Code-Form">
-      <form onSubmit={handleSubmit}>
-        <div className="Game-Code">
-          <label>Game Code</label>
-          <input
-            type="text"
-            minLength="5"
-            onChange={onChange}
-            className="Code-Box"
-            placeholder="Game code"
-          ></input>
-        </div>
-        <div className="Code-submit">
-          <button>Submit!</button>
-        </div>
+      <form className="Game-Code" onSubmit={handleSubmit}>
+          <div className="Code-instructions">Enter a valid game code below:</div>
+          <div>
+            <input
+              type="text"
+              minLength="5"
+              onChange={onChange}
+              className="Code-Box"
+              placeholder="Game code"
+            ></input>
+          </div>
+          <button className="Code-submit">Submit!</button>
       </form>
     </div>
   );

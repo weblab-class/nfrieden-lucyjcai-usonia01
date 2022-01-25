@@ -1,36 +1,24 @@
 .Code-Form {
-  display: block;
+  display: flex;
+  align-items: center;
   text-align: center;
 }
-form {
-  display: inline-block;
 
-  margin-top: 18vh;
-  border: 1px solid grey;
-  height: 50vh;
-  width: 50vw;
-}
 .Game-Code {
-  justify-content: center;
-  display: flex;
-  flex-direction: column;
-  margin: 15px;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+  border: none;
+  margin-top: 30px;
 }
 
-.Game-Code label {
-  margin: 10px;
+.Code-Label {
+  margin: 100px;
+  color: red;
 }
 
 input {
   padding: 10px;
-  margin: 15px;
+  margin: 25px 0px 15px 0px;
   border-radius: 10px;
 }
-/* 
-.Game-Code span {
-  font-size: 12px;
-  color: red;
-  display: none;
-} */
-
-/* New attempt */
