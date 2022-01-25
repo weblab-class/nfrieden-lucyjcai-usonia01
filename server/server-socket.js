@@ -62,19 +62,28 @@ const Game = (story) => {
 };
 
 const Write = (story) => {
+  console.log("in write", story);
   let writer = story.author_ids[counter];
   let ticks = 0;
-  setInterval(() => {
-    io.emit("writer", writer);
+  console.log("length", story.author_ids.length);
 
-    if (ticks % 10 === 0) {
-      counter = (counter + 1) % story.author_ids.length;
+  if (story.author_ids.length == 1) {
+    setInterval(() => {
+      io.emit("writer", writer);
+    }, 1000 / 10);
+  } else {
+    setInterval(() => {
+      io.emit("writer", writer);
 
-      writer = story.author_ids[counter];
-    }
+      if (ticks % 10 === 0) {
+        counter = (counter + 1) % story.author_ids.length;
+        console.log(counter);
+        writer = story.author_ids[counter];
+      }
 
-    ticks += 1;
-  }, 10000);
+      ticks += 1;
+    }, 1000);
+  }
 };
 
 module.exports = {

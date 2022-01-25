@@ -85,8 +85,11 @@ router.post("/initsocket", (req, res) => {
 router.post("/writer", (req, res) => {
   console.log("creating is not issue");
   GameStory.findOne({ code: req.body.code }).then((story) => {
+    console.log("found story:", story);
     if (story) {
       socketManager.Write(story);
+    } else {
+      socketManager.getIo().emit("writer", req.user._id);
     }
   });
 });
