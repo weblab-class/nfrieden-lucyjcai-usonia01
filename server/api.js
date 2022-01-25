@@ -139,7 +139,7 @@ router.get("/search", auth.ensureLoggedIn, (req, res) => {
 
 router.get("/get-likes", (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
-    let hearts = story.likes.toString();
+    let hearts = (story.likes || 0).toString();
     console.log(hearts);
     console.log(typeof(hearts));
     res.send(hearts);

@@ -125,6 +125,7 @@ const GamePage = (props) => {
 
   useEffect(() => {
     let stories = [];
+
     // console.log(props.code);
     get("/api/search", { code: props.code }).then((res) => {
       if (!res.length == 0) {
