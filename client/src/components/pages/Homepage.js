@@ -45,18 +45,16 @@ const HomePage = () => {
         <div style={{ flex: 0.5 }}>
           <div className="Homepage-instructionstitle">Instructions</div>
           <ul className="instructions-list">
-            <li>
-              Log in to begin a game and personalize your experience!
-            </li>
+            <li>Log in to begin a game and personalize your experience!</li>
             <li>
               Head over to the{" "}
               <span className="instruction-icons">
                 <i class="fas fa-plus-square"></i>
               </span>{" "}
               tab to start a new story, and use the game code to invite your friends. Each user's
-              name will be bolded when it is their turn to write a sentence (but be careful, there's
-              a time limit to submit). Once you're done, vote to end the story, set a title for it,
-              and publish!
+              name will be bolded when it is their turn to write a sentence (but be careful, you
+              only have 15 seconds to submit). Once you're done, vote to end the story, set a title
+              for it, and publish!
             </li>
             <li>
               To invite other people to write a story with you, copy the game code and send it to

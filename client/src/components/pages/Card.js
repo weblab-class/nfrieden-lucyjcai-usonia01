@@ -79,7 +79,7 @@ const Card = (props) => {
             </button>
           )}
         </div>
-        <div className="Card-authors">by {authors}</div>
+        <div className="Card-authors">by {authors.join(", ")}</div>
         <br></br>
         <div className="Card-content">{props.content}</div>
       </div>
