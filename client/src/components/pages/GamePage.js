@@ -17,6 +17,7 @@ const GamePage = (props) => {
   const [userArray, setUserArray] = useState([]);
   const [userId, setUserId] = useState(undefined);
   const [buttonDisplay, setButtonDisplay] = useState(true);
+  const [mydict, setMydict] = useState({});
 
   const CharCount = (event) => {
     setInputText(event.target.value);
@@ -104,18 +105,6 @@ const GamePage = (props) => {
     }
   });
 
-  // useEffect(() => {
-  //   post("/api/writer", { code: props.code }).then(socket.on("writer", Updatewriter));
-  // }, []);
-
-  // useEffect(() => {
-  //   get("/api/search", { code: props.code }).then((story) => {
-  //     if (story.length !== 0) {
-  //       post("/api/writer", { code: props.code }).then(socket.on("writer", Updatewriter));
-  //     }
-  //   });
-  // }, []);
-
   const Updatedisplay = (data) => {
     if (data === props.code) {
       console.log("hidding button");
@@ -139,22 +128,6 @@ const GamePage = (props) => {
     socket.on("writer", Updatewriter);
     socket.on("display", Updatedisplay);
   }, []);
-
-  /// OLD
-  // story so far
-  // useEffect(() => {
-  //   get("/api/search", { code: props.code }).then((res) => {
-  //     if (!res.length == 0) {
-  //       socket.on("content", Updatecontent);
-  //       socket.on("contributors", Updatecontributors);
-  //     } else {
-  //       post("/api/new_story", { code: props.code, content: "" }).then(() => {
-  //         // socket.on("contributors", Updatecontributors);
-  //         socket.on("contributors", Updatecontributors);
-  //       });
-  //     }
-  //   });
-  // }, []);
 
   useEffect(() => {
     let stories = [];

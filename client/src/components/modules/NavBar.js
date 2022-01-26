@@ -21,9 +21,9 @@ const NavBar = (props) => {
         <a href="/active-story" className="NavBar-link">
           <i className="fas fa-book"></i>
         </a>
-        <a href="/" className="NavBar-link">
+        {/* <a href="/" className="NavBar-link">
           <i className="fas fa-bell"></i>
-        </a>
+        </a> */}
 
         {/* <Skeleton userId={props.userId} handleLogin={props.handleLogin} handleLogout={props.handleLogout} /> */}
       </div>
