@@ -97,7 +97,7 @@ const Write = (story) => {
     }
 
     ticks += 1;
-  }, 500);
+  }, 1500);
 };
 
 module.exports = {
