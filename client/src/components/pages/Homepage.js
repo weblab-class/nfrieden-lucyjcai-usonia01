@@ -46,6 +46,9 @@ const HomePage = () => {
           <div className="Homepage-instructionstitle">Instructions</div>
           <ul className="instructions-list">
             <li>
+              Log in to begin a game and personalize your experience!
+            </li>
+            <li>
               Head over to the{" "}
               <span className="instruction-icons">
                 <i class="fas fa-plus-square"></i>
