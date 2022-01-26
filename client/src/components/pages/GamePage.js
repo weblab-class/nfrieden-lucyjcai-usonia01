@@ -37,9 +37,11 @@ const GamePage = (props) => {
   };
 
   const Updatewriter = (data) => {
-    console.log("writer:", data);
-    setButtonDisplay(false);
-    setWriterId(data);
+    if (data.storycode === props.code) {
+      console.log("writer:", data);
+      setButtonDisplay(false);
+      setWriterId(data.writer);
+    }
   };
 
   const voteOnGameState = () => {
@@ -115,7 +117,10 @@ const GamePage = (props) => {
   // }, []);
 
   const Updatedisplay = (data) => {
-    setButtonDisplay(false);
+    if (data === props.code) {
+      console.log("hidding button");
+      setButtonDisplay(false);
+    }
   };
   // const StartStory = () => {
   //   post("/api/writer", { code: props.code }).then(
@@ -133,7 +138,7 @@ const GamePage = (props) => {
     socket.on("contributors", Updatecontributors);
     socket.on("writer", Updatewriter);
     socket.on("display", Updatedisplay);
-  });
+  }, []);
 
   /// OLD
   // story so far

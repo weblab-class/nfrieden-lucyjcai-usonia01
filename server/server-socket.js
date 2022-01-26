@@ -78,10 +78,10 @@ const Write = (story) => {
   let writer = story.author_ids[counter];
   let ticks = 0;
   console.log("length", story.author_ids.length);
-
+  io.emit("display", story.code);
   setInterval(() => {
-    io.emit("display", false);
-    io.emit("writer", writer);
+    // io.emit("display", false);
+    io.emit("writer", { writer: writer, storycode: story.code });
 
     if (ticks % 10 === 0) {
       counter = (counter + 1) % story.author_ids.length;
