@@ -44,7 +44,6 @@ const GamePage = (props) => {
       setButtonDisplay(false);
       setWriterId(data.writer);
     }
-
   };
 
   const voteOnGameState = () => {
@@ -108,11 +107,9 @@ const GamePage = (props) => {
   });
 
   const Updatedisplay = (data) => {
-
     if (data === props.code) {
       setButtonDisplay(false);
     }
-    
   };
   // const StartStory = () => {
   //   post("/api/writer", { code: props.code }).then(
@@ -130,6 +127,7 @@ const GamePage = (props) => {
     socket.on("contributors", Updatecontributors);
     socket.on("writer", Updatewriter);
     socket.on("display", Updatedisplay);
+    // socket.on("likes", UpdateLikes);
   }, []);
 
   useEffect(() => {
@@ -176,7 +174,9 @@ const GamePage = (props) => {
 
               {buttonDisplay ? (
                 <div>
-                  <button className="button-start" onClick={StartStory}>Start Game!</button>
+                  <button className="button-start" onClick={StartStory}>
+                    Start Game!
+                  </button>
                 </div>
               ) : (
                 console.log("Game in progress")

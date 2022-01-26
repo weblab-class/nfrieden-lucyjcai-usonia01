@@ -112,7 +112,7 @@ router.post("/set-title", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
     story.title = req.body.title;
     story.save();
-  })
+  });
 });
 
 router.get("/finishedstories", (req, res) => {
@@ -128,18 +128,23 @@ router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/post-likes", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
-    if (!story.likes.includes(req.user._id)){
-      story.likes = [... story.likes, req.user._id];
+    if (!story.likes.includes(req.user._id)) {
+      story.likes = [...story.likes, req.user._id];
     }
-    story.save();
-    console.log("story saved!")
+    story.save().then((newStory) => {
+      socketManager.Like(newStory);
+    });
+    console.log("story saved!");
   });
 });
 
 router.post("/withdraw-likes", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
-    story.likes = story.likes.pop();
-    story.save();
+    story.likes.pop();
+    story.markModified("likes");
+    story.save().then(() => {
+      socketManager.Dislike(story);
+    });
   });
 });
 
@@ -183,10 +188,9 @@ router.get("/get-likes", (req, res) => {
 
 router.get("/get-liked", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
-    if (story.likes.includes(req.user._id)){
+    if (story.likes.includes(req.user._id)) {
       res.send(true);
-    }
-    else {
+    } else {
       res.send(false);
     }
   });
