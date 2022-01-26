@@ -82,17 +82,17 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
-let checker = true;
+// let checker = true;
 router.post("/writer", (req, res) => {
-  console.log(">>><<<<");
-  console.log(checker);
-  console.log(">>><<<");
-  if (checker) {
-    GameStory.findOne({ code: req.body.code }).then((story) => {
-      socketManager.Write(story);
-    });
-  }
-  checker = false;
+  // console.log(">>><<<<");
+  // console.log(checker);
+  // console.log(">>><<<");
+  // if (checker) {
+  GameStory.findOne({ code: req.body.code }).then((story) => {
+    socketManager.Write(story);
+  });
+  // }
+  // checker = false;
 });
 // Change 2: router for the home page/stories page
 // TODO: Style this such that the display is based on the status of the story
