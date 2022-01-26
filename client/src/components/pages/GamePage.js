@@ -42,7 +42,7 @@ const GamePage = (props) => {
 
     if (data.storycode === props.code) {
       setButtonDisplay(false);
-      setWriterId(data);
+      setWriterId(data.writer);
     }
 
   };
