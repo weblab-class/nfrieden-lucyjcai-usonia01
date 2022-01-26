@@ -228,10 +228,10 @@ const GamePage = (props) => {
 
               {/* conditions to be met for the textarea to be editable */}
               <span className="Text-space_count"> {count}/300 (Max Characters)</span>
-            </div>
-
-            {/* For the button*/}
-            <div>
+            </div>            
+          </div>
+          {/* For the button*/}
+          <div style={{ flex: 0.3 }}>
               <input
                 className="item GamePage-addButton"
                 id="submitButton"
@@ -240,18 +240,6 @@ const GamePage = (props) => {
                 onClick={addNewSentence}
               ></input>
             </div>
-            <div style={{ padding: 24, flex: 0.3 }}>
-              <Link to="/SubmittedPage">
-                {/* <input
-                className="item GamePage-postButton"
-                id = "postButton"
-                type="button"
-                value="Post!"
-                onClick={postStory}
-              ></input> */}
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </>
