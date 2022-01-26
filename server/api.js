@@ -138,7 +138,7 @@ router.post("/post-likes", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/withdraw-likes", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
-    story.likes = story.likes.pop();
+    story.likes.pop();
     story.save();
   });
 });
@@ -176,7 +176,7 @@ router.get("/get-likes", (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
     let hearts = (story.likes.length || 0).toString();
     console.log(hearts);
-    console.log(typeof hearts);
+    // console.log(typeof hearts);
     res.send(hearts);
   });
 });
@@ -184,9 +184,11 @@ router.get("/get-likes", (req, res) => {
 router.get("/get-liked", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
     if (story.likes.includes(req.user._id)){
+      console.log("this story has been liked by user!");
       res.send(true);
     }
     else {
+      console.log("this story has not yet been liked");
       res.send(false);
     }
   });

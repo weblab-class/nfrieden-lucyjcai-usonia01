@@ -26,14 +26,24 @@ const Card = (props) => {
     })
     get("/api/get-likes", {code: props.code}).then((res) => {
       let likess = parseInt(res);
-      console.log("here are the types of likess: ", typeof(likess));
+      // console.log("here are the types of likess: ", typeof(likess));
       setLikes(likess);
     });
     get("/api/get-liked", {code: props.code}).then((res) => {
-      setLiked(res);
-      console.log(liked);
+      // console.log("res is: ", res);
+      if (res === true) {
+        // console.log("now lets setLiked to true");
+        setLiked(true);
+        // console.log(liked);
+      }
+      // setLiked(res);
+      // console.log("the liked boolean for this story is: ", liked);
     })
   }, []);
+
+  useEffect(() => {
+    console.log(liked);
+  }, [liked]);
   
     return (
       <>
