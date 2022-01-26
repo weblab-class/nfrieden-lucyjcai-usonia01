@@ -42,6 +42,7 @@ const Card = (props) => {
       setAuthors(contributors);
     });
     get("/api/get-likes", { code: props.code }).then((res) => {
+      console.log("result likes: ", res);
       let likess = parseInt(res);
       // console.log("here are the types of likess: ", typeof(likess));
       setLikes(likess);

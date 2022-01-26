@@ -209,7 +209,7 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
     content: req.body.content,
     active: true,
     code: req.body.code,
-    likes: 0,
+    likes: [],
   });
 
   newStory.save().then((story) => {
