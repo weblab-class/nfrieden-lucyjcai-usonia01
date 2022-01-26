@@ -16,6 +16,7 @@
 }
 
 .GamePage-addButton {
+  margin: 15px 0px 0px 10px;
   width: 15vh;
   height: 15vh;
   font-family: "Roboto", sans-serif;

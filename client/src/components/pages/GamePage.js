@@ -44,7 +44,6 @@ const GamePage = (props) => {
       setButtonDisplay(false);
       setWriterId(data.writer);
     }
-
   };
 
   const voteOnGameState = () => {
@@ -108,11 +107,9 @@ const GamePage = (props) => {
   });
 
   const Updatedisplay = (data) => {
-
     if (data === props.code) {
       setButtonDisplay(false);
     }
-    
   };
   // const StartStory = () => {
   //   post("/api/writer", { code: props.code }).then(
@@ -130,6 +127,7 @@ const GamePage = (props) => {
     socket.on("contributors", Updatecontributors);
     socket.on("writer", Updatewriter);
     socket.on("display", Updatedisplay);
+    // socket.on("likes", UpdateLikes);
   }, []);
 
   useEffect(() => {
@@ -176,7 +174,9 @@ const GamePage = (props) => {
 
               {buttonDisplay ? (
                 <div>
-                  <button className="button-start" onClick={StartStory}>Start Game!</button>
+                  <button className="button-start" onClick={StartStory}>
+                    Start Game!
+                  </button>
                 </div>
               ) : (
                 console.log("Game in progress")
@@ -195,11 +195,6 @@ const GamePage = (props) => {
                     </button>
                   )}
                 </div>
-                {endGameVote ? (
-                  <p>Press the button again to undo.</p>
-                ) : (
-                  <p>You can undo this vote if you change your mind.</p>
-                )}
               </div>
             </div>
           </div>
@@ -233,10 +228,10 @@ const GamePage = (props) => {
 
               {/* conditions to be met for the textarea to be editable */}
               <span className="Text-space_count"> {count}/300 (Max Characters)</span>
-            </div>
-
-            {/* For the button*/}
-            <div>
+            </div>            
+          </div>
+          {/* For the button*/}
+          <div style={{ flex: 0.3 }}>
               <input
                 className="item GamePage-addButton"
                 id="submitButton"
@@ -245,18 +240,6 @@ const GamePage = (props) => {
                 onClick={addNewSentence}
               ></input>
             </div>
-            <div style={{ padding: 24, flex: 0.3 }}>
-              <Link to="/SubmittedPage">
-                {/* <input
-                className="item GamePage-postButton"
-                id = "postButton"
-                type="button"
-                value="Post!"
-                onClick={postStory}
-              ></input> */}
-              </Link>
-            </div>
-          </div>
         </div>
       </div>
     </>

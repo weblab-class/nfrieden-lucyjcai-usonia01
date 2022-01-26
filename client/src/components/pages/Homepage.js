@@ -46,14 +46,27 @@ const HomePage = () => {
           <div className="Homepage-instructionstitle">Instructions</div>
           <ul className="instructions-list">
             <li>
-              Head over to the <span className="instruction-icons"><i class="fas fa-plus-square"></i></span> tab to start a new story, and
-              use the game code to invite your friends. Each person submits a sentence on their
-              turn. Once you're done, vote to end the story, set a title for it, and you're done!
+              Head over to the{" "}
+              <span className="instruction-icons">
+                <i class="fas fa-plus-square"></i>
+              </span>{" "}
+              tab to start a new story, and use the game code to invite your friends. Each user's
+              name will be bolded when it is their turn to write a sentence (but be careful, there's
+              a time limit to submit). Once you're done, vote to end the story, set a title for it,
+              and publish!
             </li>
-            <li>To the left, view a feed of all stories on this website.</li>
             <li>
-              In the <span className="instruction-icons"><i class="fas fa-book"></i></span> tab, view the list of stories you have
-              contributed to.
+              To invite other people to write a story with you, copy the game code and send it to
+              them so they can enter it in the "Join a created story!" tab. Make sure every user has
+              entered the game before pressing the "Start Game!" button.
+            </li>
+            <li>To the left, view a feed of all published stories on this website.</li>
+            <li>
+              In the{" "}
+              <span className="instruction-icons">
+                <i class="fas fa-book"></i>
+              </span>{" "}
+              tab, view the list of stories you have contributed to.
             </li>
           </ul>
         </div>

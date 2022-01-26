@@ -46,6 +46,13 @@ const Game = (story) => {
   io.emit("IdToName", IdtoUsername);
 };
 
+const Like = (story) => {
+  io.emit("like", { likes: story.likes.length, storycode: story.code });
+};
+
+const Dislike = (story) => {
+  io.emit("dislike", { likes: story.likes.length, storycode: story.code });
+};
 // const Write = (story) => {
 //   console.log("in write", story);
 //   let writer = story.author_ids[counter];
@@ -90,7 +97,7 @@ const Write = (story) => {
     }
 
     ticks += 1;
-  }, 1000);
+  }, 500);
 };
 
 module.exports = {
@@ -110,6 +117,8 @@ module.exports = {
   removeUser: removeUser,
   Game: Game,
   Write: Write,
+  Like: Like,
+  Dislike: Dislike,
 
   getSocketFromUserID: getSocketFromUserID,
   getUserFromSocketID: getUserFromSocketID,
