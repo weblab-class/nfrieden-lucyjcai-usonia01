@@ -41,49 +41,56 @@ const Game = (story) => {
     IdtoUsername[player_ids[i]] = story.author_names[i];
   }
 
-  // let writer = story.author_ids[counter];
-
-  setTimeout(() => {
-    // socket emit to people in this game
-    io.emit("content", story.content);
-    io.emit("contributors", story.author_names);
-    io.emit("IdToName", IdtoUsername);
-    // io.emit("writer", writer);
-  }, 1000 / 10);
-
-  // setTimeout(() => {
-  //   counter = (counter + 1) % player_ids.length;
-  //   // console.log("counter:", counter);
-  //   writer = story.author_ids[counter];
-
-  //   //   // io.emit("writer", writer);
-  //   //   // emit the writer
-  // }, 10000);
+  io.emit("content", story.content);
+  io.emit("contributors", story.author_names);
+  io.emit("IdToName", IdtoUsername);
 };
+
+// const Write = (story) => {
+//   console.log("in write", story);
+//   let writer = story.author_ids[counter];
+//   let ticks = 0;
+//   console.log("length", story.author_ids.length);
+
+//   if (story.author_ids.length == 1) {
+//     console.log("not supposed to be");
+//     setInterval(() => {
+//       console.log(`running 1 person loop`);
+//       io.emit("writer", writer);
+//     }, 1000 / 10);
+//   } else {
+//     setInterval(() => {
+//       io.emit("writer", writer);
+
+//       if (ticks % 10 === 0) {
+//         counter = (counter + 1) % story.author_ids.length;
+//         console.log(counter);
+//         writer = story.author_ids[counter];
+//       }
+
+//       ticks += 1;
+//     }, 10000);
+//   }
+// };
 
 const Write = (story) => {
   console.log("in write", story);
   let writer = story.author_ids[counter];
   let ticks = 0;
   console.log("length", story.author_ids.length);
+  io.emit("display", story.code);
+  setInterval(() => {
+    // io.emit("display", false);
+    io.emit("writer", { writer: writer, storycode: story.code });
 
-  if (story.author_ids.length == 1) {
-    setInterval(() => {
-      io.emit("writer", writer);
-    }, 1000 / 10);
-  } else {
-    setInterval(() => {
-      io.emit("writer", writer);
+    if (ticks % 10 === 0) {
+      counter = (counter + 1) % story.author_ids.length;
+      // console.log(counter);
+      writer = story.author_ids[counter];
+    }
 
-      if (ticks % 10 === 0) {
-        counter = (counter + 1) % story.author_ids.length;
-        console.log(counter);
-        writer = story.author_ids[counter];
-      }
-
-      ticks += 1;
-    }, 1000);
-  }
+    ticks += 1;
+  }, 1000);
 };
 
 module.exports = {

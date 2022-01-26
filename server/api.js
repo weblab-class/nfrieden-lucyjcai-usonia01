@@ -82,16 +82,17 @@ router.post("/initsocket", (req, res) => {
   res.send({});
 });
 
+// let checker = true;
 router.post("/writer", (req, res) => {
-  console.log("creating is not issue");
+  // console.log(">>><<<<");
+  // console.log(checker);
+  // console.log(">>><<<");
+  // if (checker) {
   GameStory.findOne({ code: req.body.code }).then((story) => {
-    console.log("found story:", story);
-    if (story) {
-      socketManager.Write(story);
-    } else {
-      socketManager.getIo().emit("writer", req.user._id);
-    }
+    socketManager.Write(story);
   });
+  // }
+  // checker = false;
 });
 // Change 2: router for the home page/stories page
 // TODO: Style this such that the display is based on the status of the story
@@ -137,12 +138,9 @@ router.post("/Update-story", auth.ensureLoggedIn, (req, res) => {
       story.author_names.push(req.user.name);
     }
     story.content = req.body.content;
-    story.save();
-
-    socketManager.Game(story);
-    // socketManager.getIo().emit("content", story.content);
-    // socketManager.getIo().emit("contributors", story.author_ids);
-    // socketManager.getIo().emit("Writer", Writer(story.author_ids));
+    story.save().then(() => {
+      socketManager.Game(story);
+    });
   });
 });
 
@@ -185,9 +183,12 @@ router.post("/new_story", auth.ensureLoggedIn, (req, res) => {
     likes: 0,
   });
 
-  newStory.save().then((story) => res.send(newStory));
+  newStory.save().then((story) => {
+    socketManager.Game(newStory);
+    res.send(newStory);
+  });
   // newStory.save();
-  socketManager.Game(newStory);
+
   // socketManager.getIo().emit("New_Story", newStory);
 });
 
@@ -214,16 +215,6 @@ router.get("/contributors-list", (req, res) => {
     });
   });
 });
-
-// Suggestion?
-// router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
-//   GameStory.find({ active: false }).then((stories) => {
-//     const Toreturn = stories.filter((story) => {
-//       story.author_ids.includes(req.user._id);
-//     });
-//     res.send(Toreturn);
-//   });
-// });
 
 router.get("/myfinishedstories", auth.ensureLoggedIn, (req, res) => {
   let activeStories = [];
