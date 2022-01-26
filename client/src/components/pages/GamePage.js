@@ -39,8 +39,12 @@ const GamePage = (props) => {
 
   const Updatewriter = (data) => {
     console.log("writer:", data);
-    setButtonDisplay(false);
-    setWriterId(data);
+
+    if (data.storycode === props.code) {
+      setButtonDisplay(false);
+      setWriterId(data);
+    }
+
   };
 
   const voteOnGameState = () => {
@@ -104,7 +108,11 @@ const GamePage = (props) => {
   });
 
   const Updatedisplay = (data) => {
-    setButtonDisplay(false);
+
+    if (data === props.code) {
+      setButtonDisplay(false);
+    }
+    
   };
   // const StartStory = () => {
   //   post("/api/writer", { code: props.code }).then(
