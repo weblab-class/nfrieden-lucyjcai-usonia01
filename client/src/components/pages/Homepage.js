@@ -33,7 +33,7 @@ const HomePage = () => {
 
   return (
     <>
-      <div className="Homepage-title">Welcome to StoryCollab!</div>
+      <div className="Homepage-title">Welcome!</div>
       <div style={{ flexDirection: "row", display: "flex" }}>
         {/* Row for Feed */}
         <div className="Homepage-feed" style={{ flex: 0.5 }}>
