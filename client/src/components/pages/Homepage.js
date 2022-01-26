@@ -28,7 +28,7 @@ const HomePage = () => {
       />
     ));
   } else {
-    storiesList = <div> No stories so far! </div>;
+    storiesList = <div className="no-story-styling"> No stories so far! </div>;
   }
 
   return (

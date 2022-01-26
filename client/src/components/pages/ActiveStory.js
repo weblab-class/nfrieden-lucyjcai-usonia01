@@ -21,12 +21,12 @@ const ActiveStory = () => {
       <Card content={storyObj.content} storyId={storyObj._id} title={storyObj.title} code={storyObj.code} />
     ))
   } else {
-    storiesList = <div> No stories so far! </div>
+    storiesList = <div className="no-my-stories"> No stories so far! </div>
   }
 
   return (
     <div>
-      <div className="MyStories-title">These are your stories</div>
+      <div className="MyStories-title">My stories</div>
       {storiesList}
     </div>
   );
