@@ -133,7 +133,7 @@ const GamePage = (props) => {
     socket.on("contributors", Updatecontributors);
     socket.on("writer", Updatewriter);
     socket.on("display", Updatedisplay);
-  });
+  }, []);
 
   /// OLD
   // story so far
