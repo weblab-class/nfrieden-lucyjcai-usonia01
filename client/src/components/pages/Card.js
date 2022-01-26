@@ -11,11 +11,13 @@ const Card = (props) => {
   const likePost = () => {
     setLiked(true);
     post("/api/post-likes", {code: props.code});
+    console.log("liking!");
   };
 
   const dislikePost = () => {
     setLiked(false);
     post("/api/withdraw-likes", {code: props.code});
+    console.log("disliking!");
   };
 
   useEffect(() => {
@@ -27,6 +29,10 @@ const Card = (props) => {
       console.log("here are the types of likess: ", typeof(likess));
       setLikes(likess);
     });
+    get("/api/get-liked", {code: props.code}).then((res) => {
+      setLiked(res);
+      console.log(liked);
+    })
   }, []);
   
     return (
@@ -34,6 +40,7 @@ const Card = (props) => {
         <div className="Card-container">
           <div className="Card-title">
             {props.title}
+
             {liked ? (
               <button className="Card-xmark" onClick={dislikePost}>
                 {likes} <i className="fas fa-heart"></i>
