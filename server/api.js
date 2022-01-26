@@ -35,6 +35,12 @@ const Name = async (id) => {
   return user.name;
 };
 
+const Vote = async (id) => {
+  const user = await User.findOne({ _id: id });
+  console.log(user.voteEnd);
+  return user.voteEnd;
+};
+
 // const DictConst = (ids, names) => {
 //   const IdtoUsername = {};
 //   const n_players = ids.length;
@@ -100,6 +106,15 @@ router.get("/stories", (req, res) => {
   GameStory.find({}).then((stories) => res.send(stories));
 });
 
+router.post("/set-title", auth.ensureLoggedIn, (req, res) => {
+  console.log("at least set-title is running");
+  console.log(req.body.code, req.body.title);
+  GameStory.findOne({ code: req.body.code }).then((story) => {
+    story.title = req.body.title;
+    story.save();
+  })
+});
+
 router.get("/finishedstories", (req, res) => {
   GameStory.find({ active: false }).then((stories) => res.send(stories));
 });
@@ -125,6 +140,14 @@ router.post("/withdraw-likes", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
     story.likes = story.likes.pop();
     story.save();
+  });
+});
+
+router.post("/vote-to-end", auth.ensureLoggedIn, (req, res) => {
+  User.findOne({ _id: req.user._id }).then((user) => {
+    user.voteEnd = true;
+    user.save();
+    console.log("this is voteEnd of user:", user.voteEnd);
   });
 });
 
@@ -203,6 +226,18 @@ router.get("/contributors", auth.ensureLoggedIn, (req, res) => {
     Promise.all(Toreturn).then((result) => {
       res.send(result);
     });
+  });
+});
+
+router.get("/voters", auth.ensureLoggedIn, (req, res) => {
+  GameStory.findOne({ code: req.query.code }).then((story) => {
+    const voters = story.author_ids;
+    console.log("this is the voters:", voters);
+    const Toreturn = voters.map((id) => Vote(id));
+    Promise.all(Toreturn).then((result) => {
+      res.send(result);
+    });
+    // res.send(Toreturn);
   });
 });
 
