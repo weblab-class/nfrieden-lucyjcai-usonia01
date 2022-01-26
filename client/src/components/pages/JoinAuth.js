@@ -9,8 +9,10 @@ const Join = () => {
 
   const handleSubmit = (event) => {
     get("/api/search", { code: code }).then((result) => {
-      if (!result.length == 0) {
-        window.location.href = `/gamepage/${code}`;
+      if (result.length !== 0) {
+        post("/api/Update-story", { code: code }).then(
+          (window.location.href = `/gamepage/${code}`)
+        );
       } else {
         alert("Invalid Game Code");
       }
@@ -26,17 +28,17 @@ const Join = () => {
   return (
     <div className="Code-Form">
       <form className="Game-Code" onSubmit={handleSubmit}>
-          <div className="Code-instructions">Enter a valid game code below:</div>
-          <div>
-            <input
-              type="text"
-              minLength="5"
-              onChange={onChange}
-              className="Code-Box"
-              placeholder="Game code"
-            ></input>
-          </div>
-          <button className="Code-submit">Submit!</button>
+        <div className="Code-instructions">Enter a valid game code below:</div>
+        <div>
+          <input
+            type="text"
+            minLength="5"
+            onChange={onChange}
+            className="Code-Box"
+            placeholder="Game code"
+          ></input>
+        </div>
+        <button className="Code-submit">Submit!</button>
       </form>
     </div>
   );

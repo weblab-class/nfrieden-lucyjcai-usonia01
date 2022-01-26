@@ -16,6 +16,7 @@ const GamePage = (props) => {
   const [writerId, setWriterId] = useState(undefined);
   const [userArray, setUserArray] = useState([]);
   const [userId, setUserId] = useState(undefined);
+  const [buttonDisplay, setButtonDisplay] = useState(true);
 
   const CharCount = (event) => {
     setInputText(event.target.value);
@@ -37,6 +38,7 @@ const GamePage = (props) => {
 
   const Updatewriter = (data) => {
     console.log("writer:", data);
+    setButtonDisplay(false);
     setWriterId(data);
   };
 
@@ -112,15 +114,26 @@ const GamePage = (props) => {
   //   });
   // }, []);
 
-  useEffect(() => {
-    post("/api/writer", { code: props.code }).then(socket.on("writer", Updatewriter));
-  }, []);
+  const Updatedisplay = (data) => {
+    setButtonDisplay(false);
+  };
+  // const StartStory = () => {
+  //   post("/api/writer", { code: props.code }).then(
+  //     socket.on("writer", Updatewriter),
+  //     socket.on("display", Updatedisplay)
+  //   );
+  // };
+
+  const StartStory = () => {
+    post("/api/writer", { code: props.code });
+  };
 
   useEffect(() => {
     socket.on("content", Updatecontent);
     socket.on("contributors", Updatecontributors);
-    // socket.on("writer", Updatewriter);
-  }, [sentences]);
+    socket.on("writer", Updatewriter);
+    socket.on("display", Updatedisplay);
+  });
 
   /// OLD
   // story so far
@@ -182,6 +195,15 @@ const GamePage = (props) => {
               <Contributors userArray={userArray} writerId={writerId} />
 
               {/* Vote to end game */}
+
+              {buttonDisplay ? (
+                <div style={{ flex: 0, paddingLeft: 50 }}>
+                  <button onClick={StartStory}>Start!</button>
+                </div>
+              ) : (
+                console.log("Game in progress")
+              )}
+
               <div style={{ flex: 0.2 }}>
                 <div style={{ fontWeight: "bold", marginBottom: 5, fontSize: "20px" }}>
                   vote to end game:
