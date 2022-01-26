@@ -38,11 +38,13 @@ const GamePage = (props) => {
   };
 
   const Updatewriter = (data) => {
+    console.log("writer:", data);
+
     if (data.storycode === props.code) {
-      console.log("writer:", data);
       setButtonDisplay(false);
       setWriterId(data.writer);
     }
+
   };
 
   const voteOnGameState = () => {
@@ -106,10 +108,11 @@ const GamePage = (props) => {
   });
 
   const Updatedisplay = (data) => {
+
     if (data === props.code) {
-      console.log("hidding button");
       setButtonDisplay(false);
     }
+    
   };
   // const StartStory = () => {
   //   post("/api/writer", { code: props.code }).then(
@@ -165,18 +168,15 @@ const GamePage = (props) => {
             )}
           </div>
 
-          {/* This function is very messy but it makes the dots on the side */}
           <div style={{ flex: 0.3, paddingLeft: 30, paddingRight: 20 }}>
             <div style={{ flexDirection: "column", display: "flex", height: "100%" }}>
               {/* Contributors Bar*/}
               {console.log(`user arr: ${userArray}`)}
               <Contributors userArray={userArray} writerId={writerId} />
 
-              {/* Vote to end game */}
-
               {buttonDisplay ? (
-                <div style={{ flex: 0, paddingLeft: 50 }}>
-                  <button onClick={StartStory}>Start!</button>
+                <div>
+                  <button className="button-start" onClick={StartStory}>Start Game!</button>
                 </div>
               ) : (
                 console.log("Game in progress")
@@ -236,7 +236,7 @@ const GamePage = (props) => {
             </div>
 
             {/* For the button*/}
-            <div style={{ flex: 0.3 }}>
+            <div>
               <input
                 className="item GamePage-addButton"
                 id="submitButton"

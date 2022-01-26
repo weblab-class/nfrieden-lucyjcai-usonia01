@@ -31,10 +31,9 @@ const WaitingRoom = () => {
       <div className="WaitingRoom-title">Waiting Room</div>
       <div className="WaitingRoom-Container">
         Your game code is: <span className="display-code">{code}</span>
-        <div>Current players: *implement sockets/apis?*</div>
         <div>
           <Link to={`/gamepage/${code}`}>
-            <button className="start-game">Start Game</button>
+            <button className="start-game">Create Waiting Room</button>
           </Link>
         </div>
       </div>

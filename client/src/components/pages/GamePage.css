@@ -23,6 +23,12 @@
   border-radius: var(--l);
 }
 
+.GamePage-addButton:hover {
+  background-color: #bbc598;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
 .GamePage-postButton {
   width: 15vh;
   height: 15vh;
@@ -64,6 +70,25 @@
   height: 60vh;
 }
 
+.button-start {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+
+  background-color: #ccd5ae;
+  font-size: 15px;
+
+  margin: 0px;
+  height: 40px;
+  width: 120px;
+}
+
+.button-start:hover {
+  background-color: #bbc598;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
 .checkmark {
   border: transparent;
   background-color: transparent;
@@ -81,6 +106,7 @@
 .undoMessage {
   font-size: 10px;
 }
+
 /* New code improving the contributor attributes */
 .ColorDisplay {
   height: 25px;
