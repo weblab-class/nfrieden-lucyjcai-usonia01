@@ -195,11 +195,6 @@ const GamePage = (props) => {
                     </button>
                   )}
                 </div>
-                {endGameVote ? (
-                  <p>Press the button again to undo.</p>
-                ) : (
-                  <p>You can undo this vote if you change your mind.</p>
-                )}
               </div>
             </div>
           </div>
