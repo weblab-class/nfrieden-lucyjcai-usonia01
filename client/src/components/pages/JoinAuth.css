@@ -12,6 +12,10 @@
   margin-top: 30px;
 }
 
+.submit {
+  border-color: darkolivegreen;
+}
+
 .Code-Label {
   margin: 100px;
   color: red;

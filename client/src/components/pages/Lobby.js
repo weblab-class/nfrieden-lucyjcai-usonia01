@@ -7,10 +7,10 @@ const Lobby = () => {
     <>
       {/* We need to make the functionality of each of the button have not yet been implemented */}
       <div className="Lobby-Container">
-        <Link to="/join">
+        <Link to="/join" className="Lobby-box">
           <button className="Lobby-Options">Join a created story!</button>
         </Link>
-        <Link to="/waitingroom">
+        <Link to="/waitingroom" className="Lobby-box">
           <button className="Lobby-Options">Create a new story!</button>
         </Link>
       </div>

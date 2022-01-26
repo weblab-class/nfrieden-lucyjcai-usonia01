@@ -5,7 +5,8 @@
 }
 
 body {
-  background-color: rgba(254, 250, 224, 1);
+  /* background-color: rgba(254, 250, 224, 1); */
+  background-color: white;
 }
 
 .Web-title {
@@ -19,7 +20,8 @@ body {
   padding: var(--m);
   display: flex;
   justify-content: space-between;
-  background-color: rgba(212, 163, 115, 1);
+  /* background-color: rgba(212, 163, 115, 1); */
+  background-color: #ccd5ae;
 }
 
 .NavBar-navigations {

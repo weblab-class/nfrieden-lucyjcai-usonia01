@@ -4,9 +4,10 @@
     flex-direction: column;
     border-style: solid;
     border-width: 2px;
-    border-color: darkgray;
+    border-color: darkolivegreen;
     border-radius: 10px;
     margin: 20px;
+    background-color: #f0f3e7;
 }
 
 .Card-title {

@@ -16,20 +16,27 @@
   /* margin: auto; */
   border-style: solid;
   border-width: 2px;
+  /* border-color: darkolivegreen; */
   border-color: darkgray;
   border-radius: 10px;
 
-  background-color: rgba(212, 163, 115, 1);
-  color: #fff;
+  /* background-color: rgba(212, 163, 115, 1); */
+  /* background-color: #f0f3e7; */
+  background-color: #ccd5ae;
+  /* color: rgb(197, 121, 45); */
   font-size: 25px;
 
-  margin: 30px;
+  /* margin: 30px; */
   height: 150px;
   width: 40vw;
 }
 
+.Lobby-box {
+  margin: 30px;
+}
+
 .Lobby-Options:hover {
-  background-color: rgb(197, 121, 45);
+  /* background-color: rgba(212, 163, 115, 1); */
   transition: all 0.2s;
   cursor: pointer;
 }

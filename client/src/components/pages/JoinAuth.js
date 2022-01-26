@@ -29,7 +29,7 @@ const Join = () => {
     <div className="Code-Form">
       <form className="Game-Code" onSubmit={handleSubmit}>
         <div className="Code-instructions">Enter a valid game code below:</div>
-        <div>
+        <div className="submit">
           <input
             type="text"
             minLength="5"

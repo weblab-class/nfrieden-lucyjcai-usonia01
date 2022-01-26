@@ -21,6 +21,7 @@
   font-family: "Roboto", sans-serif;
   background-color: #ccd5ae;
   border-radius: var(--l);
+  border-color: darkgray;
 }
 
 .GamePage-addButton:hover {
@@ -58,6 +59,7 @@
 
 .Add {
   display: flex;
+  /* align-items: flex-start; */
 }
 
 .test {
@@ -74,17 +76,19 @@
   border-style: solid;
   border-width: 2px;
   border-radius: 10px;
+  border-color: darkgray;
 
-  background-color: #ccd5ae;
+  /* background-color: #ccd5ae; */
+  background-color: rgba(212, 163, 115, 1);
   font-size: 15px;
-
+  color: white;
   margin: 0px;
   height: 40px;
   width: 120px;
 }
 
 .button-start:hover {
-  background-color: #bbc598;
+  background-color: rgb(197, 121, 45);
   transition: all 0.2s;
   cursor: pointer;
 }

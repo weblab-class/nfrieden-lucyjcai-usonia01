@@ -26,7 +26,7 @@ const ActiveStory = () => {
 
   return (
     <div>
-      <div className="MyStories-title">My stories</div>
+      <div className="MyStories-title">My Stories</div>
       {storiesList}
     </div>
   );
