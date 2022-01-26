@@ -90,7 +90,7 @@ const Write = (story) => {
     }
 
     ticks += 1;
-  }, 1000);
+  }, 500);
 };
 
 module.exports = {
