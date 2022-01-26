@@ -112,14 +112,17 @@ router.post("/post-story", auth.ensureLoggedIn, (req, res) => {
 
 router.post("/post-likes", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
-    story.likes = story.likes + 1;
+    if (!story.likes.includes(req.user._id)){
+      story.likes = [... story.likes, req.user._id];
+    }
     story.save();
+    console.log("story saved!")
   });
 });
 
 router.post("/withdraw-likes", auth.ensureLoggedIn, (req, res) => {
   GameStory.findOne({ code: req.body.code }).then((story) => {
-    story.likes = story.likes - 1;
+    story.likes = story.likes.pop();
     story.save();
   });
 });
@@ -150,10 +153,21 @@ router.get("/search", auth.ensureLoggedIn, (req, res) => {
 
 router.get("/get-likes", (req, res) => {
   GameStory.findOne({ code: req.query.code }).then((story) => {
-    let hearts = (story.likes || 0).toString();
+    let hearts = (story.likes.length || 0).toString();
     console.log(hearts);
     console.log(typeof hearts);
     res.send(hearts);
+  });
+});
+
+router.get("/get-liked", auth.ensureLoggedIn, (req, res) => {
+  GameStory.findOne({ code: req.query.code }).then((story) => {
+    if (story.likes.includes(req.user._id)){
+      res.send(true);
+    }
+    else {
+      res.send(false);
+    }
   });
 });
 
