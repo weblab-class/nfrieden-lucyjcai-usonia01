@@ -24,6 +24,7 @@ body {
 
 .NavBar-navigations {
   padding: 10px;
+  /* padding-right: left; */
 }
 
 .NavBar-link {
